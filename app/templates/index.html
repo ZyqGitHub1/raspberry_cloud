@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>RpiCloud</title>
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="static/css/index.css">
+	</head>
+	<body>
+		<div class="container">
+			<button class="btn btn-lg btn-primary btn-register" id="register">Register</button>
+			<form class="form-signin">
+				<h2 class="form-signin-heading">RpiCloud Login</h2>
+				<input id="inputUsername" type="text" class="form-control" placeholder="Username">
+				<input id="inputPassword" type="password" class="form-control" placeholder="Password">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="remember-me"> Remember me
+					</label>
+				</div>
+			</form>
+			<div class="div-sign-in">
+				<button class="btn btn-block btn-lg btn-primary btn-sign-in" id="signin">Sign in</button>
+			</div>	
+			<div class="footer">
+	            <p>Designed and developed by Znx.</p>
+			</div>
+		</div>
+
+	    <!-- Modal -->
+	    <div id="register-window" class="modal fade" role="dialog">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		        <h3 id="rigester-title">Create RpiCloud Account</h3>
+		    </div>
+		    <div class="modal-body">
+		        <div class="alert alert-danger hide" id="register-alert" role="alert">
+                    Invalid username or password
+                </div>
+                <form class="form-register">
+					<input id="register-username" type="text" class="form-control" placeholder="Username">
+					<input id="register-email" type="email" class="form-control" placeholder="Email">
+					<input id="register-password" type="password" class="form-control" placeholder="Password">
+					<input id="register-confirm-password" type="password" class="form-control" placeholder="Confirm Password">
+				</form>
+		    </div>
+		    <div class="modal-footer">
+		        <button class="btn" data-dismiss="modal">Cancel</button>
+		        <button class="btn btn-primary">OK</button>
+		    </div>
+	    </div>
+
+	    <!-- js -->
+		<script src ='static/js/jquery-1.12.2.min.js'></script>
+		<script src ='static/js/bootstrap.min.js'></script>
+		<script src ='static/js/index.js'></script>
+	</body>
+</html>
