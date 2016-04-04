@@ -14,6 +14,7 @@ html,body{
 /*login*/
 
 .form-signin{
+	text-align: center;
 	padding: 15px;
 	margin: 0 auto;
 	max-width: 330px;/*居中*/
@@ -70,51 +71,18 @@ html,body{
 
 /*modal*/
 
-#register-window{
-	top: 20%;
-	bottom: 35%;
-	width: 30%;
-	font-size: 1.5em;
+.register-container{
 	text-align: center;
+	width: 60%;
 	margin: 0 auto;
-	border-radius: 12px;
-	background: #fff;
-	-webkit-animation: slidedown 1s;
-		 -o-animation: slidedown 1s;
-	   -moz-animation: slidedown 1s;
-	        animation: slidedown 1s;
 }
 
-#register-username,
-#register-email,
-#register-password,
-#register-confirm-password{
-	margin-top: 5px;
-	margin-bottom: 5px;
-	width: 40%;
+.register-body{
+	width: 60%;
 	margin: 0 auto;
-	overflow: hidden;
 }
 
-#register-username{
-	border-top-left-radius: 12px;
-	border-top-right-radius: 12px;
-}
-
-#register-confirm-password{
-	border-bottom-left-radius: 12px;
-	border-bottom-right-radius: 12px;
-}
-
-@keyframes slidedown{
-	from{
-		bottom: 100%;
-	}
-	to{
-		top: 20%;
-		bottom: 35%;
-	}
-}
+/*footer*/
 
 .footer{
 	margin-left: -15px;
