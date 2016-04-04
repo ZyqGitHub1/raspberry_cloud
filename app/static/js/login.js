@@ -1,5 +1,5 @@
 function processRegisterResult (result) {
-    if ( result['isSuccessful'] == false){
+    if ( result['successful'] == false){
          $(".form-signin > input").shake(4, 15, 600);
     }
 }
@@ -13,7 +13,7 @@ function doLogin(username, password, rememberMe) {
 
 	$.ajax({
         type:"POST",
-        url:"/author/login",
+        url:"/auth/login",
         data:postData,
         dataType:"JSON",
         success:function(result){
