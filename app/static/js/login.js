@@ -13,7 +13,7 @@ function doLogin(username, password, rememberMe) {
 
 	$.ajax({
         type:"POST",
-        url:"/author/login",
+        url:"/auth/login",
         data:postData,
         dataType:"JSON",
         success:function(result){
