@@ -1,3 +1,9 @@
+function processRegisterResult (result) {
+    if ( result['isSuccessful'] == false){
+         $(".form-signin > input").shake(4, 15, 600);
+    }
+}
+
 function doLogin(username, password, rememberMe) {
 	var postData = {
 		'username': username,
@@ -5,10 +11,15 @@ function doLogin(username, password, rememberMe) {
 		'rememberMe': rememberMe
 	}
 
-	$.postJSON('/author/login',postData,function(data){
-		if(data.successful == false)
-			$(".form-signin > input").shake(4,15,600)
-	})
+	$.ajax({
+        type:"POST",
+        url:"/author/login",
+        data:postData,
+        dataType:"JSON",
+        success:function(result){
+            processRegisterResult(result);
+        }
+    });
 }
 
 $(".btn-sign-in").click(function(){
