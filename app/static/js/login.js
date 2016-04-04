@@ -1,5 +1,5 @@
-function processRegisterResult (result) {
-    if ( result['isSuccessful'] == false){
+function processLoginResult (result) {
+    if ( result['successful'] == false){
          $(".form-signin > input").shake(4, 15, 600);
     }
 }
@@ -17,7 +17,7 @@ function doLogin(username, password, rememberMe) {
         data:postData,
         dataType:"JSON",
         success:function(result){
-            processRegisterResult(result);
+            processLoginResult(result);
         }
     });
 }
