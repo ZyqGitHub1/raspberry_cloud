@@ -5,7 +5,7 @@ function doLogin(username, password, rememberMe) {
 		'rememberMe': rememberMe
 	}
 
-	$.post('/author/login',postData,function(data){
+	$.postJSON('/author/login',postData,function(data){
 		if(data.successful == false)
 			$(".form-signin > input").shake(4,15,600)
 	})
