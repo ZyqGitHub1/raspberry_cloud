@@ -60,4 +60,8 @@ def register():
 		}
 		return jsonify(result)
 	else:
+		user = User(username = user_name,
+			email = user_email,
+			password = user_password1)
+		db.session.add(user)
 		return redirect(url_for('main.index'))
