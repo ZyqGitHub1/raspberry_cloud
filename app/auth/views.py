@@ -6,7 +6,7 @@ from . import auth
 @auth.route('/login',methods=['GET', 'POST'])
 def login():
 	data = request.json
-	user_name = data[name]
+	user_name = data[username]
 	user_password = data[password]
 	remember = data[remember]
 	user = User.query.filter_by(name = user_name).first()
