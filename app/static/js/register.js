@@ -1,26 +1,30 @@
 function processRegisterResult (result) {
-    if ( result['successful'] == false){
-         $(".form-register").shake(4, 15, 600);
-         switch(result['error'])
+    if ( result['successful'] ){
+        window.location.href = result['url']
+    } else{
+        $(".form-register").shake(4, 15, 600);
+        switch(result['error'])
         {
             case 1:
                 $('#register-alert').removeClass('hide');
-                $('#register-alert').innerHTML = "用户名不能为空";
+                $('#register-alert').html("用户名不能为空");
                 break;
             case 2:
                 $('#register-alert').removeClass('hide');
-                $('#register-alert').innerHTML = "用户名已存在";
+                $('#register-alert').html("用户名已存在");
                 break;
             case 3:
                 $('#register-alert').removeClass('hide');
-                $('#register-alert').innerHTML = "密码不能为空";
+                $('#register-alert').html("密码不能为空");
                 break;
             case 4:
                 $('#register-alert').removeClass('hide');
-                $('#register-alert').innerHTML = "两次密码不同";
+                $('#register-alert').html("两次密码不同");
+                break;
+            default:
                 break;
         }
-    } 
+    }
 }
 
 function doRegister(username, email, password, repassword) {
