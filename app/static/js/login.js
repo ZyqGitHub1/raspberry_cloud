@@ -24,16 +24,9 @@ function doLogin(username, password, rememberMe) {
     });
 }
 
-var login = function(){
+$(".btn-sign-in").click(function(){
     var username = $("#inputUsername").val();
     var password = $("#inputPassword").val();
     var rememberMe = $("#inputRememberme").is(':checked');
     doLogin(username, password, rememberMe);
-};
-
-$(".btn-sign-in").click(login());
-
-$(".form-signin > input").bind("keydown",function(e){
-    if(e.keycode == 13)
-        login();
 })
