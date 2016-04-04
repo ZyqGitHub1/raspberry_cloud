@@ -1,6 +1,8 @@
 function processLoginResult (result) {
-    if ( result['successful'] == false){
-         $(".form-signin > input").shake(4, 15, 600);
+    if ( result['successful'] ){
+         window.location.href = result['url']
+    } else{
+        $(".form-signin > input").shake(4, 15, 600);
     }
 }
 
