@@ -75,30 +75,10 @@ html,body{
 	text-align: center;
 	width: 60%;
 	margin: 0 auto;
-<<<<<<< HEAD
-	border-radius: 12px;
-	background: #fff;
-	-webkit-animation: slidedown 1s;
-		 -o-animation: slidedown 1s;
-	   -moz-animation: slidedown 1s;
-	        animation: slidedown 1s;
-	/*min-width: 300px;
-	min-height: 300px;*/
-}
-
-#register-username,
-#register-email,
-#register-password,
-#register-confirm-password{
-	margin-top: 5px;
-	margin-bottom: 5px;
-	width: 70%;
-=======
 }
 
 .register-body{
 	width: 60%;
->>>>>>> 068a54f7143a6c953acde084ef5f68c0a5d6b4a5
 	margin: 0 auto;
 }
 
