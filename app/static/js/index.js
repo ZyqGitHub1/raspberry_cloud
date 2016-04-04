@@ -17,9 +17,9 @@ jQuery.fn.shake = function(intShakes, intDistance, intDuration) {
 };
 
 $("#signin").click(function(){
-	$("input.form-control").shake(4,20,200)
+	$("input.form-control").shake(4,20,600);
 })
 
-$("#register").click(function(){
-	$("#register-window").modal('show')
+$("#register-ok").click(function(){
+    $(".form-register").shake(4,20,600);
 })

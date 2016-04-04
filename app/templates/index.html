@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<button class="btn btn-lg btn-primary btn-register" id="register">Register</button>
+			<button class="btn btn-lg btn-primary btn-register" id="register" data-toggle="modal" data-target="#register-window">Register</button>
 			<form class="form-signin">
 				<h2 class="form-signin-heading">RpiCloud</h2>
 				<input id="inputUsername" type="text" class="form-control" placeholder="Username">
@@ -26,33 +26,32 @@
 				<button class="btn btn-block btn-lg btn-primary btn-sign-in" id="signin">Sign in</button>
 			</div>	
 			<div class="footer">
-	            <p>Designed and developed by Znx.</p>
+	            <p>copyright@</p>
 			</div>
 		</div>
-
-	    <!-- Modal -->
-	    <div id="register-window" class="modal fade" role="dialog">
-		    <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		        <h3 id="rigester-title">Create RpiCloud Account</h3>
+		<!-- Modal -->
+		<div class="modal fade" id="register-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		    <div class="modal-dialog" role="document">
+		    	<div class="modal-content register-container">
+			    	<div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		        		<h3 id="rigester-title">Create RpiCloud Account</h3>
+			        </div>
+			        <div class="modal-body register-body">
+		                <form class="form-register">
+							<input id="register-username" type="text" class="form-control" placeholder="Username">
+							<input id="register-email" type="email" class="form-control" placeholder="Email">
+							<input id="register-password" type="password" class="form-control" placeholder="Password">
+							<input id="register-confirm-password" type="password" class="form-control" placeholder="Confirm Password">
+						</form>
+			        </div>
+			        <div class="modal-footer">
+				        <button class="btn" data-dismiss="modal" id="register-cancel">Cancel</button>
+		        		<button class="btn btn-primary" id="register-ok">OK</button>
+			        </div>
+			    </div>
 		    </div>
-		    <div class="modal-body">
-		        <div class="alert alert-danger hide" id="register-alert" role="alert">
-                    Invalid username or password
-                </div>
-                <form class="form-register">
-					<input id="register-username" type="text" class="form-control" placeholder="Username">
-					<input id="register-email" type="email" class="form-control" placeholder="Email">
-					<input id="register-password" type="password" class="form-control" placeholder="Password">
-					<input id="register-confirm-password" type="password" class="form-control" placeholder="Confirm Password">
-				</form>
-		    </div>
-		    <div class="modal-footer">
-		        <button class="btn" data-dismiss="modal">Cancel</button>
-		        <button class="btn btn-primary">OK</button>
-		    </div>
-	    </div>
-
+		</div>
 	    <!-- js -->
 		<script src ='static/js/jquery-1.12.2.min.js'></script>
 		<script src ='static/js/bootstrap.min.js'></script>

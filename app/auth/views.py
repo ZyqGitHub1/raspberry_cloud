@@ -1,11 +1,10 @@
-from flask import render_template,redirect,request,url_for,flash
-from flask.ext.login import login_user,logout_user,login_request
+from flask import render_template,redirect,request,url_for,flash,jsonify,json
+from flask.ext.login import login_user,logout_user,login_required
 from .. models import User
 from . import auth
 
-@auth.route('/login',models=['GET', 'POST'])
+@auth.route('/login',methods=['GET', 'POST'])
 def login():
-	logger=logging.getLogger(__name__)
 	data = request.json
 	user_name = data[name]
 	user_password = data[password]
@@ -16,7 +15,7 @@ def login():
 		return redirect(request.args.get('next') or url_for('main.console'))
 	else:
 		result = {
-		'successful':false;
+		'successful':false,
 		}
 		return jsonify(result)
 
@@ -25,3 +24,7 @@ def login():
 def logout():
 	logout_user()
 	return redirect(url_for('main.index'))
+
+@auth.route('/register', methods=['GET', 'POST'])
+def register():
+	pass
