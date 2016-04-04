@@ -3,7 +3,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    os.environ.get('SECRET_KEY') or 'hard to guess string'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     RPICLOUD_MAIL_SUBJECT_PREFIX = '[RASPcloud]'
     RPICLOUD_MAIL_SENDER = 'RPIcloud Admin <RPIcloud@example.com>'

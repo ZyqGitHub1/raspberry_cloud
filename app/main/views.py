@@ -10,6 +10,6 @@ from ..models import User
 def index():
 	return render_template('index.html')
 
-@main.route('/console', methods = ['GET', 'POST'])
-def console():
-	return 'console'
+@main.route('/main', methods = ['GET', 'POST'])
+def main():
+	return '<h1>console</h1>'
