@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>RpiCloud</title>
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="static/css/console.css">
+	</head>
+	<body>
+		<!--nav begin-->
+		<nav class="navbar navbar-inverse navbar-static-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a href="#" class="navbar-brand">RpiCloud</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse navbar-right">
+            		<div class="dropdown">
+					  	<a href="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Username
+					  		<span class="caret"></span>
+					  	</a>
+					  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					    	<li><a href="#" data-toggle="modal" data-target="#changeUsername">更改用户名</a></li>
+					    	<li><a href="#" data-toggle="modal" data-target="#changePassword">更改密码</a></li>
+					    	<li><a href="#" data-toggle="modal" data-target="#changeEmail">更改邮箱</a></li>
+					    	<li role="separator" class="divider"></li>
+					    	<li><a href="#" data-toggle="modal" data-target="#logout">退出登录</a></li>
+					  	</ul>
+					</div>
+		        </div>
+			</div>
+		</nav><!-- nav end -->
+
+	    <div class="container-fluid">
+		    <div class="row">
+		    	<div class="col-sm-3 col-md-2 side">
+			    	<ul class="nav nav-stacked">
+			            <li><button type="button" class="btn btn-primary btn-block" id="section1-left">功能1</button></li>
+			            <li><button type="button" class="btn btn-primary btn-block" id="section2-left">功能2</button></li>
+			            <li><button type="button" class="btn btn-primary btn-block" id="section3-left">功能3</button></li>
+			            <li><button type="button" class="btn btn-primary btn-block" id="section4-left">功能4</button></li>
+			            <li><button type="button" class="btn btn-primary btn-block" id="section5-left">功能5</button></li>
+			        </ul>
+	            </div>
+
+	            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	            	<div id="section1-right">
+	            		<table class="table table-hover table-striped table-responsive">
+	            			<tr>
+	            				<td>1</td>
+	            				<td><button type="button" class="btn btn-success">开</button></td>
+	            			</tr>
+	            			<tr>
+	            				<td>2</td>
+	            				<td><button type="button" class="btn btn-success">开</button></td>
+	            			</tr>
+	            			<tr>
+	            				<td>3</td>
+	            				<td><button type="button" class="btn btn-success">开</button></td>
+	            			</tr>
+	            			<tr>
+	            				<td>4</td>
+	            				<td><button type="button" class="btn btn-success">开</button></td>
+	            			</tr>
+	            			<tr>
+	            				<td>5</td>
+	            				<td><button type="button" class="btn btn-success">开</button></td>
+	            			</tr>
+	            		</table>
+	            	</div>
+	            	<div id="section2-right">
+	            		<p>222222222222222</p>
+	            	</div>
+	            	<div id="section3-right">
+	            		<p>333333333333333</p>
+	            	</div>
+	            	<div id="section4-right">
+	            		<p>4444444444444444444</p>
+	            	</div>
+	            	<div id="section5-right">
+	            		<p>5555555555555555</p>
+	            	</div>
+	            </div>
+		    </div>
+		</div>
+
+		<!-- change username Modal -->
+		<div class="modal fade" id="changeUsername" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Change Your Username</h4>
+				    </div>
+			      	<div class="modal-body">
+			        	<input type="text" class="form-control" placeholder="Your new name">
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
+				        <button type="button" class="btn btn-success">Save</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		<!-- change password Modal -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Change Your Password</h4>
+				    </div>
+			      	<div class="modal-body change-password-body">
+			      		<div class="alert alert-danger hide" id="change-password-alert" role="alert"></div>
+			      		<input type="text" class="form-control" id="change-oldpassword" placeholder="Your old password">
+			        	<input type="text" class="form-control" id="change-password" placeholder="Your new password">
+			        	<input type="text" class="form-control" id="change-repassword" placeholder="Comfirm your new password">
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
+				        <button type="button" class="btn btn-success" id="password-save">Save</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		<!-- change email Modal -->
+		<div class="modal fade" id="changeEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Change Your Email</h4>
+				    </div>
+			      	<div class="modal-body">
+			        	<input type="text" class="form-control" placeholder="Your new email">
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
+				        <button type="button" class="btn btn-success">Save</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		<!-- log out Modal -->
+		<div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Log Out</h4>
+				    </div>
+			      	<div class="modal-body">
+			        	<h5>Are you sure to leave?</h5>
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				        <button type="button" class="btn btn-success">Yes</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		<!-- js -->
+		<script src ='static/js/jquery-1.12.2.min.js'></script>
+		<script src ='static/js/bootstrap.min.js'></script>
+		<script src ='static/js/console.js'></script>
+		<script src ='static/js/shake.js'></script>
+	</body>
+</html>
