@@ -162,7 +162,7 @@ function changeEmail(oldpassword, email) {
 }
 
 $("#email-save").click(function(){
-    var oldpassword = $('change-email-oldpassword').val();
-	var email = $('change-email').val();
+    var oldpassword = $('#change-email-oldpassword').val();
+	var email = $('#change-email').val();
     changeEmail(oldpassword, email);
 })

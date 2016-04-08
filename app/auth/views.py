@@ -12,7 +12,7 @@ def noneIfEmptyString(value):
 		return None
 	return value
 
-
+'''
 @auth.before_app_request
 def before_request():
 	if  not current_user.confirmed \
@@ -25,7 +25,7 @@ def before_request():
 def unconfirmed():
 	if current_user.confirmed:
 		return redirect(url_for('main.main'))
-	return render_template('auth/unconfirmed.html')
+	return render_template('auth/unconfirmed.html')'''
 
 
 #登陆路由
@@ -151,28 +151,28 @@ def resend_confirmation():
 def change_username():
 	data = request.form
 	print data
-	new_username = data.get('new_username')
-	user = User.query.filter_by(new_username).first()
+	new_username = data.get('username')
+	user = User.query.filter_by(username = new_username).first()
 	if user:
 		result = {
 		'successful':False,
 		'error':1
 		}
-		return json(result)
+		return jsonify(result)
 	elif(new_username == None):
 		result = {
 		'successful':False,
 		'error':2
 		}
-		return json(result)
+		return jsonify(result)
 	else:
 		current_user.username = new_username
-		db.sessin.add(current_user)
+		db.session.add(current_user)
 		result = {
 		'successful':True,
-		'url':url_for('main.mian')
+		'url':url_for('main.main')
 		}
-		return json(result)
+		return jsonify(result)
 
 @auth.route('/changepassword', methods=['GET', 'POST'])
 @login_required
@@ -238,12 +238,12 @@ def password_reset(token):
 			return redirect(url_for('main.index'))
 	return render_template('auth/reset_password.html', form=form)
 
-'''@auth.route('/changeemail', methods=['GET', 'POST'])
+@auth.route('/changeemail', methods=['GET', 'POST'])
 @login_required
 def change_email_request():
 	data = request.form
-	if current_user.verify_password(data.get(password)):
-		new_email = data.get(new_email)
+	if current_user.verify_password(data.get('oldpassword')):
+		new_email = data.get('email')
 		token = current_user.generate_email_change_token(new_email)
 		send_email(new_email, 'Confirm your email address',
 				   'auth/email/change_email',
@@ -252,13 +252,13 @@ def change_email_request():
 		'successful':True,
 		'msg':'一封确认邮件已经发送到您的新邮箱'
 		}
-		return json(result)
+		return jsonify(result)
 	else:
 		result = {
 		'successful':False,
 		'msg':'错误的邮箱或密码'
 		}
-		return json(result)
+		return jsonify(result)
 
 @auth.route('/changeemail/<token>')
 @login_required
@@ -267,4 +267,4 @@ def change_email(token):
 		flash('Your email address has been updated.')
 	else:
 		flash('Invalid request.')
-	return redirect(url_for('main.index'))'''
+	return redirect(url_for('main.main'))
