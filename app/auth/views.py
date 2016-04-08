@@ -12,10 +12,9 @@ def noneIfEmptyString(value):
 		return None
 	return value
 
-'''
 @auth.before_app_request
 def before_request():
-	if  not current_user.confirmed \
+	if  current_user.confirmed \
 			and request.endpoint[:5] != 'auth.' \
 			and request.endpoint != 'static':
 		return redirect(url_for('auth.unconfirmed'))
@@ -25,7 +24,7 @@ def before_request():
 def unconfirmed():
 	if current_user.confirmed:
 		return redirect(url_for('main.main'))
-	return render_template('auth/unconfirmed.html')'''
+	return render_template('auth/unconfirmed.html')
 
 
 #登陆路由
