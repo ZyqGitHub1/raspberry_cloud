@@ -38,6 +38,49 @@ $('#section5-left').click(function() {
 	$('#section5-right').show();
 })
 
+// change username modal
+function processChangeUsernameResult (result) {
+    if ( result['successful'] ){
+        window.location.href = result['url']
+    } else{
+        $(".change-username-body").shake(4, 15, 600);
+        switch(result['error'])
+        {
+            case 1:
+                $('#change-username-alert').removeClass('hide');
+                $('#change-username-alert').html("该用户名已被使用");
+                break;
+            case 2:
+                $('#change-username-alert').removeClass('hide');
+                $('#change-username-alert').html("用户名不能为空");
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+function changeUsername(username) {
+	var postData = {
+		'username': username
+	}
+
+	$.ajax({
+        type:"POST",
+        url:"/auth/changeusername",
+        data:postData,
+        dataType:"JSON",
+        success:function(result){
+            processChangeUsernameResult(result);
+        }
+    });
+}
+
+$("#username-save").click(function(){
+	var username = $('#change-username').val();
+    changeUsername(username);
+})
+
 // change password modal
 function processChangePasswordResult (result) {
     if ( result['successful'] ){
@@ -83,4 +126,39 @@ $("#password-save").click(function(){
 	var password = $('#change-password').val();
 	var repassword = $('#change-repassword').val();
     changePassword(oldpassword, password, repassword);
+})
+
+// change email modal
+function processChangeEmailResult (result) {
+    if ( result['successful'] ){
+        $('#change-email-alert2').removeClass('hide');
+        $('#change-email-alert2').html(result['msg']);
+    } else{
+        $(".change-email-body").shake(4, 15, 600);
+        $('#change-email-alert1').removeClass('hide');
+        $('#change-email-alert1').html(result['msg']);
+    }
+}
+
+function changeEmail(oldpassword, email) {
+	var postData = {
+		'oldpassword': oldpassword,
+		'email': email
+	}
+
+	$.ajax({
+        type:"POST",
+        url:"/auth/changeemail",
+        data:postData,
+        dataType:"JSON",
+        success:function(result){
+            processChangeEmailResult(result);
+        }
+    });
+}
+
+$("#email-save").click(function(){
+    var oldpassword = $('change-email-oldpassword').val();
+	var email = $('change-email').val();
+    changeEmail(oldpassword, email);
 })
