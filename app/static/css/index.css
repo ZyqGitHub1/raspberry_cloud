@@ -22,14 +22,21 @@
 	top: 20%;
 }
 
+.form-signin #forgot-password{
+	float: right;
+	color: #fff;
+}
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox{
 	text-align: center;
 	margin-bottom: 10px;
+	overflow: hidden;
 }
 
 .form-signin .checkbox{
 	font-weight: normal;
+	overflow: hidden;
 }
 
 .form-signin .form-control{
@@ -55,7 +62,8 @@
 	border-bottom-right-radius: 12px;
 }
 
-.btn-register{
+#register{
+	font-size: 2em;
 	position: relative;
 	top: 5px;
 	float: right;
