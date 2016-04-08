@@ -94,12 +94,13 @@
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				        <h4 class="modal-title" id="myModalLabel">Change Your Username</h4>
 				    </div>
-			      	<div class="modal-body">
-			        	<input type="text" class="form-control" placeholder="Your new name">
+			      	<div class="modal-body change-username-body">
+			      		<div class="alert alert-danger hide" id="change-username-alert" role="alert"></div>
+			        	<input type="text" class="form-control" id="change-username" placeholder="Your new name">
 			      	</div>
 			      	<div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
-				        <button type="button" class="btn btn-success">Save</button>
+				        <button type="button" class="btn btn-success" id="username-save">Save</button>
 			      	</div>
 		    	</div>
 		  	</div>
@@ -135,13 +136,15 @@
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				        <h4 class="modal-title" id="myModalLabel">Change Your Email</h4>
 				    </div>
-			      	<div class="modal-body">
-			      		<input type="password" class="form-control" placeholder="Your old password">
-			        	<input type="text" class="form-control" placeholder="Your new email">
+			      	<div class="modal-body change-email-body">
+			      		<div class="alert alert-danger hide" id="change-email-alert1" role="alert"></div>
+			      		<div class="alert alert-success hide" id="change-email-alert2" role="alert"></div>
+			      		<input type="password" class="form-control" id="change-email-oldpassword" placeholder="Your old password">
+			        	<input type="text" class="form-control" id="change-email" placeholder="Your new email">
 			      	</div>
 			      	<div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
-				        <button type="button" class="btn btn-success">Save</button>
+				        <button type="button" class="btn btn-success" id="email-save">Save</button>
 			      	</div>
 		    	</div>
 		  	</div>
