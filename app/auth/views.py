@@ -130,7 +130,7 @@ def confirm(token):
 		'url': url_for('main.main'),
 		'msg': 'The confirmation link is invalid or has expired.'
 		}
-		return jsonify(result)
+	return jsonify(result)
 
 
 @auth.route('/confirm')
@@ -146,36 +146,73 @@ def resend_confirmation():
 		}
 	return jsonify(result)
 
+@auth.route('/changeusername', methods=['GET', 'POST'])
+@login_required
+def change_username():
+	data = request.form
+	print data
+	new_username = data.get('new_username')
+	user = User.query.filter_by(new_username).first()
+	if user:
+		result = {
+		'successful':False,
+		'error':1
+		}
+		return json(result)
+	elif(new_username == None):
+		result = {
+		'successful':False,
+		'error':2
+		}
+		return json(result)
+	else:
+		current_user.username = new_username
+		db.sessin.add(current_user)
+		result = {
+		'successful':True,
+		'url':url_for('main.mian')
+		}
+		return json(result)
 
 @auth.route('/changepassword', methods=['GET', 'POST'])
 @login_required
 def change_password():
 	data = request.form
 	print data
-	if current_user.verify_password(data.get(old_password)):
-		current_user.password = data.get(new_password)
+	oldpassword = noneIfEmptyString(data.get('oldpassword'))
+	password = noneIfEmptyString(data.get('password'))
+	repassword = noneIfEmptyString(data.get('repassword'))
+	if not current_user.verify_password(oldpassword):
+		result = {
+		'successful':False,
+		'error': 1
+		}
+		return jsonify(result)
+	elif(password != repassword):
+		result = {
+				'successful':False,
+				'error': 2
+				}
+		return jsonify(result)
+	elif(password == None):
+		result = {
+				'successful':False,
+				'error': 3
+				}
+		return jsonify(result)
+	else:
+		current_user.password = password
 		db.session.add(current_user)
 		result = {
 		'successful':True,
 		'url': url_for('main.index'),
-		'msg': 'Your password has been updated.'
 		}
 		return jsonify(result)
-	else:
-		result = {
-		'successful':False,
-		'msg': 'Invalid password!'
-		}
-		return jsonify(result)
-'''
+
 @auth.route('/reset', methods=['GET', 'POST'])
 def password_reset_request():
     if not current_user.is_anonymous:
-        result = {
-		'successful':True,
-		'url': url_for('main.index'),
-		}
-		return jsonify(result)
+        return redirect(url_for('main.index'))
     form = PasswordResetRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -189,4 +226,52 @@ def password_reset_request():
               'sent to you.')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)
-    '''
+
+
+@auth.route('/reset/<token>', methods=['GET', 'POST'])
+def password_reset(token):
+    if not current_user.is_anonymous:
+        return redirect(url_for('main.index'))
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None:
+            return redirect(url_for('main.index'))
+        if user.reset_password(token, form.password.data):
+            flash('Your password has been updated.')
+            return redirect(url_for('auth.login'))
+        else:
+            return redirect(url_for('main.index'))
+    return render_template('auth/reset_password.html', form=form)
+
+@auth.route('/changeemail', methods=['GET', 'POST'])
+@login_required
+def change_email_request():
+	data = request.form
+	if current_user.verify_password(data.get(password)):
+		new_email = data.get(new_email)
+		token = current_user.generate_email_change_token(new_email)
+		send_email(new_email, 'Confirm your email address',
+				   'auth/email/change_email',
+				   user=current_user, token=token)
+		result = {
+		'successful':True,
+		'url':url_for('main.main')
+		'msg':'一封确认邮件已经发送到您的新邮箱，3秒后将为您跳转到主页'
+		}
+		return json(result)
+	else:
+		result = {
+		'successful':False,
+		'msg':'错误的邮箱或密码'
+		}
+		return json(result)
+
+@auth.route('/changeemail/<token>')
+@login_required
+def change_email(token):
+	if current_user.change_email(token):
+		flash('Your email address has been updated.')
+	else:
+		flash('Invalid request.')
+	return redirect(url_for('main.index'))

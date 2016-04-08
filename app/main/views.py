@@ -13,4 +13,4 @@ def index():
 @main.route('/main', methods = ['GET', 'POST'])
 @login_required
 def main():
-	return '<h1>console</h1>'
+	return render_template('console.html')

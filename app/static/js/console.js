@@ -48,11 +48,15 @@ function processChangePasswordResult (result) {
         {
             case 1:
                 $('#change-password-alert').removeClass('hide');
-                $('#change-password-alert').html("您两次输入的新密码不同");
+                $('#change-password-alert').html("旧密码输入错误");
                 break;
             case 2:
                 $('#change-password-alert').removeClass('hide');
-                $('#change-password-alert').html("旧密码输入错误");
+                $('#change-password-alert').html("您两次输入的新密码不同");
+                break;
+            case 3:
+                $('#change-password-alert').removeClass('hide');
+                $('#change-password-alert').html("密码不能为空");
                 break;
             default:
                 break;
@@ -60,7 +64,7 @@ function processChangePasswordResult (result) {
     }
 }
 
-function changePassword(oldpassword, password, repassword) {
+function changePassword(oldpassword, password, repassword){
 	var postData = {
 		'oldpassword': oldpassword,
 		'password': password,
