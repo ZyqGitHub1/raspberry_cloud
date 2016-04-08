@@ -3,10 +3,6 @@
  	text-align: center;
  }
 
- .3-sec-ease-in-out{
- 	-webkit-transition: width 3s ease-in-out;
-    -moz-transition: width 3s ease-in-out;
-    -ms-transition: width 3s ease-in-out;
-    -o-transition: width 3s ease-in-out;
-    transition: width 3s ease-in-out;
+ .footer{
+ 	font-size: 1.5em;
  }
