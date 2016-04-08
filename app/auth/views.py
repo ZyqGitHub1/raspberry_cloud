@@ -5,17 +5,17 @@ from .. models import User
 from . import auth
 from .. import db
 from .. email import send_email
+from forms import PasswordResetForm, PasswordResetRequestForm
 
 def noneIfEmptyString(value):
 	if value == '':
 		return None
 	return value
 
-'''
+
 @auth.before_app_request
 def before_request():
-	if current_user.is_authenticated \
-			and not current_user.confirmed \
+	if  not current_user.confirmed \
 			and request.endpoint[:5] != 'auth.' \
 			and request.endpoint != 'static':
 		return redirect(url_for('auth.unconfirmed'))
@@ -23,10 +23,10 @@ def before_request():
 
 @auth.route('/unconfirmed')
 def unconfirmed():
-	if current_user.is_anonymous or current_user.confirmed:
-		return redirect(url_for('main.index'))
+	if current_user.confirmed:
+		return redirect(url_for('main.main'))
 	return render_template('auth/unconfirmed.html')
-'''
+
 
 #登陆路由
 @auth.route('/login',methods=['GET', 'POST'])
@@ -211,40 +211,34 @@ def change_password():
 
 @auth.route('/reset', methods=['GET', 'POST'])
 def password_reset_request():
-    if not current_user.is_anonymous:
-        return redirect(url_for('main.index'))
-    form = PasswordResetRequestForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user:
-            token = user.generate_reset_token()
-            send_email(user.email, 'Reset Your Password',
-                       'auth/email/reset_password',
-                       user=user, token=token,
-                       next=request.args.get('next'))
-        flash('An email with instructions to reset your password has been '
-              'sent to you.')
-        return redirect(url_for('auth.login'))
-    return render_template('auth/reset_password.html', form=form)
+	form = PasswordResetRequestForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(email=form.email.data).first()
+		if user:
+			token = user.generate_reset_token()
+			send_email(user.email, 'Reset Your Password',
+					   'auth/email/reset_password',
+					   user=user, token=token,
+					   next=request.args.get('next'))
+			flash('An email with instructions to reset your password has been '
+				'sent to you.')
+		return redirect(url_for('main.index'))
+	return render_template('auth/reset_password.html', form=form)
 
 
 @auth.route('/reset/<token>', methods=['GET', 'POST'])
 def password_reset(token):
-    if not current_user.is_anonymous:
-        return redirect(url_for('main.index'))
-    form = PasswordResetForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user is None:
-            return redirect(url_for('main.index'))
-        if user.reset_password(token, form.password.data):
-            flash('Your password has been updated.')
-            return redirect(url_for('auth.login'))
-        else:
-            return redirect(url_for('main.index'))
-    return render_template('auth/reset_password.html', form=form)
+	form = PasswordResetForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(email=form.email.data).first()
+		if user is None:
+			return redirect(url_for('main.index'))
+		if user.reset_password(token, form.password.data):
+			flash('Your password has been updated.')
+			return redirect(url_for('main.index'))
+	return render_template('auth/reset_password.html', form=form)
 
-@auth.route('/changeemail', methods=['GET', 'POST'])
+'''@auth.route('/changeemail', methods=['GET', 'POST'])
 @login_required
 def change_email_request():
 	data = request.form
@@ -256,8 +250,7 @@ def change_email_request():
 				   user=current_user, token=token)
 		result = {
 		'successful':True,
-		'url':url_for('main.main')
-		'msg':'一封确认邮件已经发送到您的新邮箱，3秒后将为您跳转到主页'
+		'msg':'一封确认邮件已经发送到您的新邮箱'
 		}
 		return json(result)
 	else:
@@ -274,4 +267,4 @@ def change_email(token):
 		flash('Your email address has been updated.')
 	else:
 		flash('Invalid request.')
-	return redirect(url_for('main.index'))
+	return redirect(url_for('main.index'))'''
