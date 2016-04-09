@@ -24,7 +24,9 @@
 					  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					    	<li><a href="#" data-toggle="modal" data-target="#changeUsername">更改用户名</a></li>
 					    	<li><a href="#" data-toggle="modal" data-target="#changePassword">更改密码</a></li>
-					    	<li><a href="#" data-toggle="modal" data-target="#changeEmail">{{ current_user.email }}更改邮箱</a></li>
+					    	<li><p>{{ current_user.email }}</p>
+					    	</li>
+					    	<li><a href="#" data-toggle="modal" data-target="#changeEmail">更改邮箱</a></li>
 					    	<li role="separator" class="divider"></li>
 					    	<li><a href="#" data-toggle="modal" data-target="#logout">退出登录</a></li>
 					  	</ul>
