@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    	<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<meta name="description" content="">
+    	<meta name="author" content="">
 		<title>RpiCloud</title>
 		<img class="img-rounded profile-thumbnail" src="{{ current_user.gravatar(size=50) }}">
 		<!-- css -->
 		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="static/css/console.css">
+		<link rel="stylesheet" type="text/css" href="static/css/offcanvas.css">
 	</head>
 	<body>
 		<!--nav begin-->
-		<nav class="navbar navbar-inverse navbar-static-top">
+		<nav class="navbar navbar-fixed-top navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
+					<span class="sr-only">Toggle navigation</span>
+					<p class="pull-left visible-xs">
+            			<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          			</p>
 					<a href="#" class="navbar-brand">RpiCloud</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse navbar-right">
             		<div class="dropdown">
-					  	<a href="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{current_user.username}}
+					  	<a href="" id="dropdownMenu1" class="btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{current_user.username}}
 					  		<span class="caret"></span>
 					  	</a>
 					  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -35,60 +43,61 @@
 		        </div>
 			</div>
 		</nav><!-- nav end -->
+	   <div class="container">
 
-	    <div class="container-fluid">
-		    <div class="row">
-		    	<div class="col-sm-3 col-md-2 side">
-			    	<ul class="nav nav-stacked">
+      <div class="row row-offcanvas row-offcanvas-left">
+      	  <div class="col-xs-2 col-sm-2 sidebar-offcanvas side" id="sidebar">
+          		<div>
+            		<ul class="nav nav-stacked">
 			            <li><button type="button" class="btn btn-primary btn-block" id="section1-left">功能1</button></li>
 			            <li><button type="button" class="btn btn-primary btn-block" id="section2-left">功能2</button></li>
 			            <li><button type="button" class="btn btn-primary btn-block" id="section3-left">功能3</button></li>
 			            <li><button type="button" class="btn btn-primary btn-block" id="section4-left">功能4</button></li>
 			            <li><button type="button" class="btn btn-primary btn-block" id="section5-left">功能5</button></li>
 			        </ul>
-	            </div>
+          		</div>
+        	</div><!--/.sidebar-offcanvas-->
 
-	            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	            	<div id="section1-right">
-	            		<table class="table table-hover table-striped table-responsive">
-	            			<tr>
-	            				<td>1</td>
-	            				<td><button type="button" class="btn btn-success">开</button></td>
-	            			</tr>
-	            			<tr>
-	            				<td>2</td>
-	            				<td><button type="button" class="btn btn-success">开</button></td>
-	            			</tr>
-	            			<tr>
-	            				<td>3</td>
-	            				<td><button type="button" class="btn btn-success">开</button></td>
-	            			</tr>
-	            			<tr>
-	            				<td>4</td>
-	            				<td><button type="button" class="btn btn-success">开</button></td>
-	            			</tr>
-	            			<tr>
-	            				<td>5</td>
-	            				<td><button type="button" class="btn btn-success">开</button></td>
-	            			</tr>
-	            		</table>
-	            	</div>
-	            	<div id="section2-right">
-	            		<p>222222222222222</p>
-	            	</div>
-	            	<div id="section3-right">
-	            		<p>333333333333333</p>
-	            	</div>
-	            	<div id="section4-right">
-	            		<p>4444444444444444444</p>
-	            	</div>
-	            	<div id="section5-right">
-	            		<p>5555555555555555</p>
-	            	</div>
-	            </div>
-		    </div>
+        <div class="col-xs-12 col-sm-9">
+        	<div id="section1-right">
+	            <table class="table table-hover table-striped table-responsive">
+	            	<tr>
+	            		<td>1</td>
+	            		<td><button type="button" class="btn btn-success">开</button></td>
+	            	</tr>
+	            	<tr>
+	            		<td>2</td>
+	            		<td><button type="button" class="btn btn-success">开</button></td>
+	            	</tr>
+	            	<tr>
+	            		<td>3</td>
+	            		<td><button type="button" class="btn btn-success">开</button></td>
+	            	</tr>
+	            	<tr>
+	            		<td>4</td>
+	            		<td><button type="button" class="btn btn-success">开</button></td>
+	            	</tr>
+	            	<tr>
+	            		<td>5</td>
+	            		<td><button type="button" class="btn btn-success">开</button></td>
+	            	</tr>
+	            </table>
+	        </div>
+	        <div id="section2-right">
+	        	<p>222222222222222</p>
+	        </div>
+	        <div id="section3-right">
+	        	<p>333333333333333</p>
+	        </div>
+	        <div id="section4-right">
+	        	<p>4444444444444444444</p>
+	        </div>
+	        <div id="section5-right">
+	        	<p>5555555555555555</p>
+	        </div>
+        </div><!--/.col-xs-12.col-sm-9-->
+      </div><!--/row-->
 		</div>
-
 		<!-- change username Modal -->
 		<div class="modal fade" id="changeUsername" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  	<div class="modal-dialog" role="document">
@@ -171,11 +180,13 @@
 		    	</div>
 		  	</div>
 		</div>
+		</div>
 
 		<!-- js -->
 		<script src ='static/js/jquery-1.12.2.min.js'></script>
 		<script src ='static/js/bootstrap.min.js'></script>
 		<script src ='static/js/console.js'></script>
 		<script src ='static/js/shake.js'></script>
+		<script src="static/js/offcanvas.js"></script>
 	</body>
 </html>
