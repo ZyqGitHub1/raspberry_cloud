@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>RpiCloud</title>
+		<img class="img-rounded profile-thumbnail" src="{{ current_user.gravatar(size=50) }}">
 		<!-- css -->
 		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="static/css/console.css">
@@ -24,7 +25,7 @@
 					  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					    	<li><a href="#" data-toggle="modal" data-target="#changeUsername">更改用户名</a></li>
 					    	<li><a href="#" data-toggle="modal" data-target="#changePassword">更改密码</a></li>
-					    	<li><p>{{ current_user.email }}</p>
+					    	<li>{{ current_user.email }}
 					    	</li>
 					    	<li><a href="#" data-toggle="modal" data-target="#changeEmail">更改邮箱</a></li>
 					    	<li role="separator" class="divider"></li>
