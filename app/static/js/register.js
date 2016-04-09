@@ -53,3 +53,7 @@ $("#register-ok").click(function(){
     var repassword = $("register-confirm-password").val();
     doRegister(username, email, password, repassword);
 })
+
+$("#register-cancel").click(function(){
+    $('#register-alert').addClass('hide');
+})
