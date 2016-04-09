@@ -3,7 +3,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from . import db
 from . import login_manager
-from flask.ext.login import UserMixin
+from flask.ext.login import UserMixin, AnonymousUserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -115,3 +115,8 @@ class Electrical(db.Model):
 
     def __repr__(self):
         return '<Electrical %r>' % self.electname
+
+class AnonymousUser(AnonymousUserMixin):
+    confirmed = 0
+
+login_manager.anonymous_user = AnonymousUser
