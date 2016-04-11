@@ -43,6 +43,18 @@ $(function(argument) {
     $('[type="checkbox"]').bootstrapSwitch();
 })
 
+//datetimepicker
+$('.form_datetime').datetimepicker({
+    //language:  'fr',
+    weekStart: 1,
+    todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    forceParse: 0,
+    showMeridian: 1
+});
+
 // change username modal
 function processChangeUsernameResult (result) {
     if ( result['successful'] ){

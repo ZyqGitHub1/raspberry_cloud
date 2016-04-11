@@ -12,6 +12,9 @@
 }
 
 /*login*/
+.logo{
+	padding-bottom: 5%;
+}
 
 .form-signin{
 	text-align: center;
@@ -19,7 +22,7 @@
 	margin: 0 auto;
 	max-width: 330px;/*居中*/
 	position: relative;
-	top: 20%;
+	top: 15%;
 }
 
 .form-signin #forgot-password{
