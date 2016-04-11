@@ -38,6 +38,11 @@ $('#section5-left').click(function() {
 	$('#section5-right').show();
 })
 
+//switch
+$(function(argument) {
+    $('[type="checkbox"]').bootstrapSwitch();
+})
+
 // change username modal
 function processChangeUsernameResult (result) {
     if ( result['successful'] ){

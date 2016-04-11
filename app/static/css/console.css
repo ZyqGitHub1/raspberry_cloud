@@ -1,8 +1,5 @@
 .side{
-	/*display: block;
-	padding: 20px;
-	overflow-x: hidden;
-	overflow-y: auto;*/
+	padding-bottom: 40%;
 	background-color: #f5f5f5;
 	border-right: 1px solid #eee;
 }
@@ -12,7 +9,7 @@
 }
 
 .dropdown{
-	padding-top: 16%;
+	padding-top: 5%;
 }
 
 /*modal*/
