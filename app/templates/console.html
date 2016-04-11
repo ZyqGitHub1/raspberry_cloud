@@ -11,6 +11,7 @@
 		<!-- css -->
 		<link rel="stylesheet" href="static/css/bootstrap.css">
 		<link rel="stylesheet" href="static/css/bootstrap-switch.css">
+		<link rel="stylesheet" href="static/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" href="static/css/console.css">
 		<link rel="stylesheet" href="static/css/offcanvas.css">
 	</head>
@@ -91,7 +92,45 @@
 		        		</table>
 			        </div>
 			        <div id="section2-right">
-			        	<p>222222222222222</p>
+			        	<table class="table table-hover table-striped table-responsive table-bordered">
+		        			<tr>
+		        				<th>电器名称</th>
+		        				<th>电器接口</th>
+		        				<th>备注</th>
+		        				<th>状态</th>
+		        				<th>时间</th>
+		        				<th>添加/删除</th>
+		        			</tr>
+		        			<tr>
+		        				<td>
+		        					<input type="text" class="form-control">
+		        				</td>
+		        				<td width="20%">
+			        				<select class="form-control">
+								    	<option value="0">My Profile</option>
+								        <option value="1">My Friends</option>
+								        <option value="2">My Profile</option>
+								        <option value="3">My Friends</option>
+							    	</select>
+							    </td>
+		        				<td>
+		        					<input type="text" class="form-control">
+		        				</td>
+		        				<td>
+		        					<input type="checkbox" checked/>
+		        				</td>
+		        				<td width="33%">
+	        					    <div class="input-group date form_datetime" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd - HH:ii p" data-link-field="dtp_input1">
+					                    <input class="form-control" size="16" type="text" value="" readonly>
+					                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+					                </div>    
+		        				</td>
+		        				<td>
+		        					<button class="btn btn-success">添加</button>
+		        				</td>
+		        			</tr>
+		        		</table>
 			        </div>
 			        <div id="section3-right">
 			        	<p>333333333333333</p>
@@ -193,6 +232,8 @@
 		<script src ='static/js/jquery-1.12.2.min.js'></script>
 		<script src ='static/js/bootstrap.min.js'></script>
 		<script src ='static/js/bootstrap-switch.js'></script>
+		<script src ='static/js/bootstrap-datetimepicker.js'></script>
+		<script src ='static/js/bootstrap-datetimepicker.fr.js'></script>
 		<script src ='static/js/console.js'></script>
 		<script src ='static/js/shake.js'></script>
 		<script src ='static/js/offcanvas.js'></script>
