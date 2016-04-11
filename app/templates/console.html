@@ -28,14 +28,13 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse navbar-right">
             		<div class="dropdown">
-					  	<a href="" id="dropdownMenu1" class="btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{current_user.username}}
+					  	<a href="" id="dropdownMenu1" class="btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{current_user.username}}({{ current_user.email }})
 					  		<span class="caret"></span>
 					  	</a>
 					  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					    	<li><a href="#" data-toggle="modal" data-target="#changeUsername">更改用户名</a></li>
 					    	<li><a href="#" data-toggle="modal" data-target="#changePassword">更改密码</a></li>
-					    	<li>{{ current_user.email }}
-					    	</li>
+					    	<!-- <li>{{ current_user.email }}</li> -->
 					    	<li><a href="#" data-toggle="modal" data-target="#changeEmail">更改邮箱</a></li>
 					    	<li role="separator" class="divider"></li>
 					    	<li><a href="#" data-toggle="modal" data-target="#logout">退出登录</a></li>
