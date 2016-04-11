@@ -9,6 +9,7 @@ def noneIfEmptyString(value):
         return None
     return value
 
+
 @control.route('/switch',methods=['GET', 'POST'])
 @login_required
 def switch():
@@ -43,5 +44,30 @@ def query_electrical():
         }
     return jsonify(result)
 
-
-
+@control.route('/add_electrical', methods=['GET', 'POST'])
+@login_required
+def add_electricals():
+	data = request.form
+	print data
+	electrical_name = noneIfEmptyString(data.get('electrical_name'))
+	remask = noneIfEmptyString(data.get('remask'))
+	status = noneIfEmptyString(data.get('status'))
+	try:
+		electrical = Electrical(electrical_name=electrical_name,
+								pin_id=Pin.query_by(useable=True).first().bcm_id,
+								remark=remark)
+		db.session.add(electrical)
+		result = {
+		'successful': True
+		}
+	except:
+		if(electrical_name==None):
+			result = {
+			'error': 0
+			}
+		else:
+			result = {
+			'error': 1
+			}
+	finally:
+		return jsonify(result)

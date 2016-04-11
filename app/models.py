@@ -109,7 +109,8 @@ class Pin(db.Model):
 class Electrical(db.Model):
     __tablename__ = 'electricals'
     id = db.Column(db.Integer, primary_key=True)
-    electrical_name = db.Column(db.String(64), unique=True)
+    electrical_name = db.Column(db.String(64), unique=True, nullable=True)
+    remark = db.Column(db.String(128), default=None)
     pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
 
     def __repr__(self):
