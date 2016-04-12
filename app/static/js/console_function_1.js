@@ -8,7 +8,7 @@ function processReflushResult(result){
 			tr.find(".m-interface > input").val(e['pin']);
 			tr.find(".remark > input").val(e['remark']);
 			tr.find(".status > input").val(e['status']);
-			tr.find(".add-or-remove > button").removeClass("btn-success").removeClass("add").addClass("btn-danger").addClass("remove").html("删除")；
+			tr.find(".add-or-remove > button").removeClass("btn-success").removeClass("add").addClass("btn-danger").addClass("remove").html("删除");
 			tr.insertAfter($('#header'));
 		}
 	}else{
@@ -19,7 +19,7 @@ function processReflushResult(result){
 function reflush() {
 	$.ajax({
 		type:"POST",
-		url:"/control/query/electrical",
+		url:"/control/query_electrical",
 		success:function(result){
 			processReflushResult(result);
 		}
@@ -46,8 +46,8 @@ function processAddResult(result){
 
 function doAdd(name,interface,remark,status){
 	var postData = {
-		'eletrical_name': name,
-		'pin': interface,
+		'electrical_name': name,
+		'i': interface,
 		'remark': remark,
 		'status': status
 	}
@@ -61,6 +61,7 @@ function doAdd(name,interface,remark,status){
 			processAddResult(result);
 		}
 	});
+	
 }
 
 $('.add').click(function(){

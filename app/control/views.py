@@ -28,14 +28,17 @@ def switch():
     }
     return jsonify(result)
 
-@control.route('/query/electrical',methods=['GET', 'POST'])
+@control.route('/query_electrical',methods=['GET', 'POST'])
 @login_required
 def query_electrical():
     electrical = Electrical.query.all()
     electricalList=[]
     for tmp in electrical:
-        electricalList.append({'electname':tmp.electrical_name,'pin':tmp.pin_id, 'remark':tmp.remark,\
-         'status':Pin.query.filter_by(id = tmp.pin_id).status})
+        electricalList.append({'electrical_name':tmp.electrical_name,
+        	                   'pin':tmp.pin_id, 
+        	                   'remark':tmp.remark,
+            				   'status':Pin.query.filter_by(id = tmp.pin_id).first().status})
+    print electricalList
     result = {
             'successful':True,
             'data':{
@@ -52,24 +55,25 @@ def add_electricals():
 	electrical_name = noneIfEmptyString(data.get('electrical_name'))
 	remark = noneIfEmptyString(data.get('remark'))
 	status = noneIfEmptyString(data.get('status'))
-	try:
+	if(electrical_name == None):
+		result = {
+		'successful': False,
+		'error': 0
+		}
+		return jsonify(result)
+	elif(Electrical.query.filter_by(electrical_name=electrical_name).first()):
+		result = {
+		'successful': False,
+		'error': 1
+		}
+		return jsonify(result)
+	else:
 		electrical = Electrical(electrical_name=electrical_name,
-								pin_id=Pin.query_by(useable=True).first().bcm_id,
+								pin_id=Pin.query.filter_by(useable=True).first().bcm_id,
 								remark=remark)
 		db.session.add(electrical)
+		Pin.query.filter_by(useable=True).first().useable = False
 		result = {
 		'successful': True
-		}
-	except:
-		if(electrical_name==None):
-			result = {
-			'successful': False,
-			'error': 0
-			}
-		else:
-			result = {
-			'successful': False,
-			'error': 1
-			}
-	finally:
+		}	
 		return jsonify(result)

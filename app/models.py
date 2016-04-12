@@ -112,7 +112,6 @@ class Electrical(db.Model):
     electrical_name = db.Column(db.String(64), unique=True, nullable=True)
     remark = db.Column(db.String(128), default=None)
     pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
-
     def __repr__(self):
         return '<Electrical %r>' % self.electname
 
