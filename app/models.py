@@ -102,14 +102,15 @@ class Pin(db.Model):
     bcm_id = db.Column(db.Integer, unique=True)
     wpi_id = db.Column(db.Integer, unique=True)
     useable = db.Column(db.Boolean, default=False)
-    state = db.Column(db.Boolean, default=False)
+    status = db.Column(db.Boolean, default=False)
     electricals = db.relationship('Electrical',  backref='pin', lazy='dynamic')
 
 
 class Electrical(db.Model):
     __tablename__ = 'electricals'
     id = db.Column(db.Integer, primary_key=True)
-    electname = db.Column(db.String(64), unique=True)
+    electrical_name = db.Column(db.String(64), unique=True, nullable=True)
+    remark = db.Column(db.String(128), default=None)
     pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
 
     def __repr__(self):
