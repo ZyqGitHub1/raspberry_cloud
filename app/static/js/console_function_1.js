@@ -4,7 +4,7 @@ function processAddResult(result){
 	tr.find(".m-interface > input").val(result['interface']);
 	tr.find(".remark > input").val(result['remark']);
 	tr.find(".status > input").val(result['status']);
-	tr.find(".add-or-remove > button").removeClass("btn-success").removeClass("add").addClass("btn-danger").addClass("remove").html("删除")；
+	tr.find(".add-or-remove > button").removeClass("btn-success").removeClass("add").addClass("btn-danger").addClass("remove").html("删除");
 	tr.insertAfter($('#header'));
 }
 
@@ -18,7 +18,7 @@ function doAdd(name,interface,remark,status){
 
 	$.ajax({
 		type:"POST",
-		url:"=======================================",
+		url:"control/add_electrical",
 		data: postData,
 		dataType: "JSON",
 		success:function(result){
