@@ -30,7 +30,7 @@ def add_electricals():
 	data = request.form
 	print data
 	electrical_name = noneIfEmptyString(data.get('electrical_name'))
-	remask = noneIfEmptyString(data.get('remask'))
+	remark = noneIfEmptyString(data.get('remark'))
 	status = noneIfEmptyString(data.get('status'))
 	try:
 		electrical = Electrical(electrical_name=electrical_name,
@@ -43,10 +43,12 @@ def add_electricals():
 	except:
 		if(electrical_name==None):
 			result = {
+			'successful': False,
 			'error': 0
 			}
 		else:
 			result = {
+			'successful': False,
 			'error': 1
 			}
 	finally:
