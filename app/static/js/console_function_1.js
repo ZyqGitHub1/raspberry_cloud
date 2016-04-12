@@ -1,7 +1,7 @@
 function processReflushResult(result){
 	if (result['successful']) 
 	{
-		var electricalList = result['data']['electricalList'];
+		var electricalList = result['electricalList'];
 		for(var e in electricalList){
 			var tr = $('#header').clone();
 			tr.find(".m-name > input").val(e['electrical_name']);

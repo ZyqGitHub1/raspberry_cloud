@@ -40,11 +40,9 @@ def query_electrical():
             				   'status':Pin.query.filter_by(id = tmp.pin_id).first().status})
     print electricalList
     result = {
-            'successful':True,
-            'data':{
-                'electrical': electricalList,
-            }
-        }
+    'successful':True,
+    'electrical': electricalList
+    }
     return jsonify(result)
 
 @control.route('/add_electrical', methods=['GET', 'POST'])
