@@ -5,47 +5,47 @@ from . import control
 from .. import db
 
 def noneIfEmptyString(value):
-    if value == '':
-        return None
-    return value
+	if value == '':
+		return None
+	return value
 
 
 @control.route('/switch',methods=['GET', 'POST'])
 @login_required
 def switch():
-    data = request.form
-    print data
-    pin_id = noneIfEmptyString(data.get('pin_id'))
-    id = int(pin_number)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(id,GPIO.OUT)
-    if request.form['turn'] == "on":
-        GPIO.output(id,True)
-    if request.form['turn'] == "off":
-        GPIO.output(id,False)
-    result = {
-        'successful':True,
-    }
-    return jsonify(result)
+	data = request.form
+	print data
+	pin_id = noneIfEmptyString(data.get('pin_id'))
+	id = int(pin_number)
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setup(id,GPIO.OUT)
+	if request.form['turn'] == "on":
+		GPIO.output(id,True)
+	if request.form['turn'] == "off":
+		GPIO.output(id,False)
+	result = {
+		'successful':True,
+	}
+	return jsonify(result)
 
 @control.route('/query_electrical',methods=['GET', 'POST'])
 @login_required
 def query_electrical():
-    electrical = Electrical.query.all()
-    electricalList=[]
-    for tmp in electrical:
-        electricalList.append({'electrical_name':tmp.electrical_name,
-        	                   'pin':tmp.pin_id, 
-        	                   'remark':tmp.remark,
-            				   'status':Pin.query.filter_by(id = tmp.pin_id).first().status})
-    print electricalList
-    result = {
-            'successful':True,
-            'data':{
-                'electrical': electricalList,
-            }
-        }
-    return jsonify(result)
+	electrical = Electrical.query.all()
+	electricalList=[]
+	for tmp in electrical:
+		electricalList.append({'electrical_name':tmp.electrical_name,
+							   'pin':tmp.pin_id, 
+							   'remark':tmp.remark,
+							   'status':Pin.query.filter_by(bcm_id = tmp.pin_id).first().status})
+	print electricalList
+	result = {
+			'successful':True,
+			'data':{
+				'electricalList': electricalList
+			}
+		}
+	return jsonify(result)
 
 @control.route('/add_electrical', methods=['GET', 'POST'])
 @login_required
@@ -65,6 +65,12 @@ def add_electricals():
 		result = {
 		'successful': False,
 		'error': 1
+		}
+		return jsonify(result)
+	elif(Pin.query.filter_by(useable=True).first()==None):
+		result = {
+		'successful': False,
+		'error': 2
 		}
 		return jsonify(result)
 	else:
