@@ -1,6 +1,7 @@
 function processReflushResult(result){
 	if (result['successful']) 
 	{
+<<<<<<< HEAD
 		var electricalList = result['electricalList'];
 		for(var e in electricalList){
 			var tr = $('#header').clone();
@@ -8,10 +9,21 @@ function processReflushResult(result){
 			tr.find(".m-interface > input").val(e['pin']);
 			tr.find(".remark > input").val(e['remark']);
 			tr.find(".status > input").val(e['status']);
+=======
+		var electricalList = result['data']['electricalList'];
+		console.log(electricalList);
+		electricalList.forEach(function(x) {
+  			var tr = $('#header').clone();
+			tr.find(".m-name > input").val(x['electrical_name']);
+			tr.find(".m-interface > input").val(x['pin']);
+			tr.find(".remark > input").val(x['remark']);
+			tr.find(".status > input").val(x['status']);
+>>>>>>> 4cf22366d950b82d122ea2ed7dd2a107f5d6877e
 			tr.find(".add-or-remove > button").removeClass("btn-success").removeClass("add").addClass("btn-danger").addClass("remove").html("删除");
 			tr.insertAfter($('#header'));
-		}
-	}else{
+		});
+	}
+	else{
 		alert("adsadsadasd");
 	}
 }
@@ -39,6 +51,9 @@ function processAddResult(result){
 		case 1:
 			alert("电器名重复");
 			break;
+		case 2:
+			alert("电器接口已用完");
+			break;
 		default:
 			break;
 	}
@@ -47,7 +62,7 @@ function processAddResult(result){
 function doAdd(name,interface,remark,status){
 	var postData = {
 		'electrical_name': name,
-		'i': interface,
+		'pin_id': interface,
 		'remark': remark,
 		'status': status
 	}
