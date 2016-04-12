@@ -183,3 +183,7 @@ $("#email-save").click(function(){
 	var email = $('#change-email').val();
     changeEmail(oldpassword, email);
 })
+
+$("#logoutyes").click(function(){
+    window.location.href = '/auth/logout'
+})
