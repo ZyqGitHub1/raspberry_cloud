@@ -1,3 +1,15 @@
+//show table element when onload
+$(function(){
+	$.ajax({
+		type:"POST",
+		url:"/control/query_electrical",
+		success:function(result){
+			processReflushResult(result);
+		}
+	});
+})
+
+//reflush table element
 function processReflushResult(result){
 	if (result['successful']) 
 	{
@@ -8,12 +20,20 @@ function processReflushResult(result){
 			tr.find(".m-name > input").val(x['electrical_name']);
 			tr.find(".m-interface > input").val(x['pin']);
 			tr.find(".remark > input").val(x['remark']);
-			tr.find(".status > input").val(x['status']);
-			tr.find(".add-or-remove > button").removeClass("btn-success").removeClass("add").addClass("btn-danger").addClass("remove").html("删除");
+
+			var newButton = $("<input type="checkbox" checked/>");
+			newButton.attr("checked",x['status']);
+			var oldButton = tr.find(".status > input");
+			tr.find(".status").replaceChild(newButton,oldButton);
+
+			var removeButton = $("<button class="btn btn-danger remove">删除</button>");
+			var addButton = tr.find(".add-or-remove > button");
+			tr.find(".add-or-remove").replaceChild(removeButton,addButton);
 			tr.insertAfter($('#header'));
 		});
 	}
-	else{
+	else
+	{
 		alert("adsadsadasd");
 	}
 }
@@ -28,6 +48,7 @@ function reflush() {
 	});
 }
 
+//add table element
 function processAddResult(result){
 	if(result['successful'])
 	{
@@ -76,3 +97,9 @@ $('.add').click(function(){
 	var status = $('.status > input').is(':checked');
 	doAdd(name,interface,remark,status);
 })
+
+//delete table element
+// $('.remove').click(function(){
+// 	var name = this.parent().siblings('.m-name').val();
+// 	alert(name);
+// })
