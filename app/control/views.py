@@ -89,9 +89,10 @@ def add_electricals():
 
 @control.route('/delete_electrical', methods=['GET', 'POST'])
 @login_required
-def delete_eletrical():
+def delete_electrical():
 	data = request.form
-	electrical_name = data.noneIfEmptyString(get('electrical_name'))
+	print data
+	electrical_name = noneIfEmptyString(data.get('electrical_name'))
 	electrical = Electrical.query.filter_by(electrical_name=electrical_name).first()
 	if(electrical_name):
 		Pin.query.filter_by(bcm_id=electrical.pin_id).first().useable = 1

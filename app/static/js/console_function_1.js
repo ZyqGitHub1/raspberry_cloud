@@ -13,6 +13,7 @@ $(function(){
 function processReflushResult(result){
 	if (result['successful']) 
 	{
+
 		var electricalList = result['data']['electricalList'];
 		console.log(electricalList);
 		electricalList.forEach(function(x) {
@@ -29,6 +30,26 @@ function processReflushResult(result){
 			var remark = $("<input type='text' class='form-control'>");
 			var status = $("<input class='create-switch' type='checkbox'>");
 			var remove = $("<button class='btn btn-danger remove'>删除</button>");
+			remove.on('click',function(){
+				var name = $(this).parent().parent().eq(0).find("input").val();
+				postData = {
+					'electrical_name': name
+				}
+			
+				$.ajax({
+					type: "POST",
+					url: "/control/delete_electrical",
+					data: postData,
+					dataType: "JSON",
+					success: function(result){
+						if (result['successful']) 
+						{
+							$('.table2').empty();
+							reflush();
+						}
+					}
+				});
+			});			
 			name.val(x['electrical_name']);
 			pin.val(x['pin']);
 			remark.val(x['remark']);
@@ -38,7 +59,7 @@ function processReflushResult(result){
 			td[2].append(remark);
 			td[3].append(status);
 			td[4].append(remove);
-			tr.insertAfter($('.header'));
+			tr.appendTo($('.table2'));
 			$('.create-switch').bootstrapSwitch();
 		});
 	}
@@ -62,6 +83,7 @@ function reflush() {
 function processAddResult(result){
 	if(result['successful'])
 	{
+		$('.table2').empty();
 		reflush();
 	}
 	switch(result['error'])
@@ -106,24 +128,6 @@ $('.add').click(function(){
 	var remark = $('.remark > input').val();
 	var status = $('.status > input').is(':checked');
 	doAdd(name,interface,remark,status);
-})
-
-//delete table element
-$('.remove').click(function(){
-	var name = $(this).parent().parent().eq(0).find("input").val();
-	postData = {
-		'name': name
-	}
-
-	$.ajax({
-		type: "POST",
-		url: "================",
-		data: postData,
-		dataType: "JSON",
-		success: function(result){
-			processReflushResult(result);
-		}
-	});
 })
 
 //open or close the light
