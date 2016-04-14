@@ -4,6 +4,8 @@ from .. models import User,Electrical,Pin
 from . import control
 from .. import db
 from camera_pi import *
+from threading import Timer
+import time, datetime
 
 def noneIfEmptyString(value):
 	if value == '':
@@ -91,13 +93,20 @@ def delete_eletrical():
 	data = request.form
 	electrical_name = data.noneIfEmptyString(get('electrical_name'))
 	electrical = Electrical.query.filter_by(electrical_name=electrical_name).first()
-	Pin.query.filter_by(bcm_id=electrical.pin_id).first().useable = 1
-	db.session.delete(electrical)
+	if(electrical_name):
+		Pin.query.filter_by(bcm_id=electrical.pin_id).first().useable = 1
+		db.session.delete(electrical)
+	result = {
+	'successful': True
+	}
+	return jsonify(result)
 
-# @control.route('/camera', methods=['GET', 'POST'])
-# @login_required
-# def camera():
-#     return render_template('camera.html')
+
+@control.route('/video_feed')
+@login_required
+def video_feed():
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def gen(camera):
     while True:
@@ -105,7 +114,16 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-@control.route('/video_feed')
-def video_feed():
-    return Response(gen(Camera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+# @control.route('/timer')
+# @login_required
+# def timer_switch(, status):
+
+
+# def timer():
+# 	data = request.form
+# 	electrical_name = data.noneIfEmptyString(get('electrical_name'))
+# 	end_time = float(data.noneIfEmptyString(get('time')))
+# 	start_time = time.mktime(datetime.datetime.now().timetuple())
+# 	time = start_time - end_time
+# 	timer = threading.Timer(time, timer_switch)
+# 	timer.start()
