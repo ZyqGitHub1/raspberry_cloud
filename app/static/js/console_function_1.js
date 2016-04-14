@@ -138,7 +138,6 @@ function doAdd(name,interface,remark,status){
 			processAddResult(result);
 		}
 	});
-	
 }
 
 $('.add').click(function(){
