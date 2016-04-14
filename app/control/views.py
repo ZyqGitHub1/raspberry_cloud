@@ -110,16 +110,16 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-# @control.route('/timer')
-# @login_required
-# def timer_switch(, status):
-
-
-# def timer():
-# 	data = request.form
-# 	electrical_name = data.noneIfEmptyString(get('electrical_name'))
-# 	end_time = float(data.noneIfEmptyString(get('time')))
-# 	start_time = time.mktime(datetime.datetime.now().timetuple())
-# 	time = start_time - end_time
-# 	timer = threading.Timer(time, timer_switch)
-# 	timer.start()
+@control.route('/timer')
+@login_required
+def timer():
+	data = request.form
+	electrical_name = noneIfEmptyString(data.get('electrical_name'))
+	end_time = float(data.get('time'))
+	status = bool(data.get('status'))
+	start_time = time.mktime(datetime.datetime.now().timetuple())
+	time = end_time - start_time
+	timer = threading.Timer(time, gpio_change, 
+							id=Electrical.query.filter_by(electrical_name=electrical_name).pin_id,
+							status=status)
+	timer.start()

@@ -115,6 +115,12 @@ class Electrical(db.Model):
     def __repr__(self):
         return '<Electrical %r>' % self.electname
 
+class Temperature(db.Model):
+    __tablename__ = 'temprature'
+    id = db.Column(db.Integer, primary_key=True)
+    time = db.Colunmn(db.Float, unique=True)
+    temprature = db.Column(db.Float)
+
 class AnonymousUser(AnonymousUserMixin):
     confirmed = 0
 
