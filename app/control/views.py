@@ -1,8 +1,9 @@
-from flask import render_template,redirect,request,url_for,flash,jsonify,json
+from flask import render_template,redirect,request,url_for,flash,jsonify,json,Response
 from flask.ext.login import login_user,logout_user,login_required
 from .. models import User,Electrical,Pin
 from . import control
 from .. import db
+from camera_pi import *
 
 def noneIfEmptyString(value):
 	if value == '':
@@ -83,3 +84,28 @@ def add_electricals():
 		'successful': True
 		}	
 		return jsonify(result)
+
+@control.route('/delete_electrical', methods=['GET', 'POST'])
+@login_required
+def delete_eletrical():
+	data = request.form
+	electrical_name = data.noneIfEmptyString(get('electrical_name'))
+	electrical = Electrical.query.filter_by(electrical_name=electrical_name).first()
+	Pin.query.filter_by(bcm_id=electrical.pin_id).first().useable = 1
+	db.session.delete(electrical)
+
+# @control.route('/camera', methods=['GET', 'POST'])
+# @login_required
+# def camera():
+#     return render_template('camera.html')
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@control.route('/video_feed')
+def video_feed():
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
