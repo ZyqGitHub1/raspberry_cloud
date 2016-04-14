@@ -29,6 +29,25 @@ function processReflushResult(result){
 			var pin = $("<input type='text 'class='form-control' readonly='true'>");
 			var remark = $("<input type='text' class='form-control'>");
 			var status = $("<input class='create-switch' type='checkbox'>");
+			status.on('switchChange.bootstrapSwitch', function(event, state) {
+  				console.log(state); 
+  				id = x['pin'];
+  				console.log(id);
+  					postData = {
+  						'pin_id': id,
+						'status': state
+					}
+			
+					$.ajax({
+						type: "POST",
+						url: "/control/switch",
+						data: postData,
+						dataType: "JSON",
+						success: function(result){
+							
+						}
+					});
+				});
 			var remove = $("<button class='btn btn-danger remove'>删除</button>");
 			remove.on('click',function(){
 				var name = $(this).parent().parent().eq(0).find("input").val();
@@ -130,20 +149,3 @@ $('.add').click(function(){
 	doAdd(name,interface,remark,status);
 })
 
-//open or close the light
-$('.create-switch').click(function(){
-	var is_checked = $(this).attr('checked');
-	postData = {
-		'checked': is_checked
-	}
-
-	$.ajax({
-		type: "POST",
-		url: "==================",
-		data: postData,
-		dataType: "JSON",
-		success: function(result){
-			
-		}
-	});
-})
