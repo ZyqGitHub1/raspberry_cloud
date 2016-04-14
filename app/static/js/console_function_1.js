@@ -27,18 +27,19 @@ function processReflushResult(result){
 			var name = $("<input type='text' class='form-control'>");
 			var pin = $("<input type='text 'class='form-control' readonly='true'>");
 			var remark = $("<input type='text' class='form-control'>");
-			var status = $("<input id='create-switch' checked='checked' type='checkbox'>");
+			var status = $("<input class='create-switch' type='checkbox'>");
 			var remove = $("<button class='btn btn-danger remove'>删除</button>");
 			name.val(x['electrical_name']);
 			pin.val(x['pin']);
-			remark.val(x['remark']);			
+			remark.val(x['remark']);
+			status.attr("checked",x['status']);		
 			td[0].append(name);
 			td[1].append(pin);
 			td[2].append(remark);
 			td[3].append(status);
 			td[4].append(remove);
 			tr.insertAfter($('.header'));
-			$('#create-switch').bootstrapSwitch();
+			$('.create-switch').bootstrapSwitch();
 		});
 	}
 	else
@@ -108,7 +109,37 @@ $('.add').click(function(){
 })
 
 //delete table element
-// $('.remove').click(function(){
-// 	var name = this.parent().siblings('.m-name').val();
-// 	alert(name);
-// })
+$('.remove').click(function(){
+	var name = $(this).parent().parent().eq(0).find("input").val();
+	postData = {
+		'name': name
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "================",
+		data: postData,
+		dataType: "JSON",
+		success: function(result){
+			processReflushResult(result);
+		}
+	});
+})
+
+//open or close the light
+$('.create-switch').click(function(){
+	var is_checked = $(this).attr('checked');
+	postData = {
+		'checked': is_checked
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "==================",
+		data: postData,
+		dataType: "JSON",
+		success: function(result){
+			
+		}
+	});
+})
