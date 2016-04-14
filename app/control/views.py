@@ -4,6 +4,7 @@ from .. models import User,Electrical,Pin
 from . import control
 from .. import db
 from camera_pi import *
+from mygpio import *
 
 def noneIfEmptyString(value):
 	if value == '':
@@ -17,13 +18,7 @@ def switch():
 	data = request.form
 	print data
 	pin_id = noneIfEmptyString(data.get('pin_id'))
-	id = int(pin_number)
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(id,GPIO.OUT)
-	if request.form['turn'] == "on":
-		GPIO.output(id,True)
-	if request.form['turn'] == "off":
-		GPIO.output(id,False)
+	gpio_change(int(pin_id),request.form['turn'])
 	result = {
 		'successful':True,
 	}
