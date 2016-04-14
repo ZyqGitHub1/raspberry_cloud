@@ -1,20 +1,21 @@
-$(function() {
-	reflush();
-});
+//show table element when onload
+$(function(){
+	$.ajax({
+		type:"POST",
+		url:"/control/query_electrical",
+		success:function(result){
+			processReflushResult(result);
+		}
+	});
+})
 
+//reflush table element
 function processReflushResult(result){
 	if (result['successful']) 
 	{
 		var electricalList = result['data']['electricalList'];
 		console.log(electricalList);
 		electricalList.forEach(function(x) {
-  	// 		var tr = $('#header').clone();
-			// tr.find(".m-name > input").val(x['electrical_name']);
-			// tr.find(".m-interface > input").val(x['pin']);
-			// tr.find(".remark > input").val(x['remark']);
-			// tr.find(".status > input").val(x['status']);
-			// tr.find(".add-or-remove > button").removeClass("btn-success").removeClass("add").addClass("btn-danger").addClass("remove").html("删除");
-			// tr.insertAfter($('#header'));
 			var tr = $("<tr></tr>");
 			var td = new Array(5);
 			for(var i = 0;i < 5;i++){
@@ -27,10 +28,6 @@ function processReflushResult(result){
 			var pin = $("<input type='text 'class='form-control' readonly='true'>");
 			var remark = $("<input type='text' class='form-control'>");
 			var status = $("<input id='create-switch' checked='checked' type='checkbox'>");
-			//status.attr("checked",x['status']);
-			//$('#create-switch').removeAttr("checked");
-            //$('#create-switch').wrap('<div class="make-switch" data-on="success" data-off="warning" />').parent().bootstrapSwitch();  
-			//$('#create-switch').wrap('<div class="switch" />').parent().bootstrapSwitch();
 			var remove = $("<button class='btn btn-danger remove'>删除</button>");
 			name.val(x['electrical_name']);
 			pin.val(x['pin']);
@@ -42,9 +39,10 @@ function processReflushResult(result){
 			td[4].append(remove);
 			tr.insertAfter($('.header'));
 			$('#create-switch').bootstrapSwitch();
-			});
+		});
 	}
-	else{
+	else
+	{
 		alert("adsadsadasd");
 	}
 }
@@ -59,6 +57,7 @@ function reflush() {
 	});
 }
 
+//add table element
 function processAddResult(result){
 	if(result['successful'])
 	{
@@ -107,3 +106,9 @@ $('.add').click(function(){
 	var status = $('.status > input').is(':checked');
 	doAdd(name,interface,remark,status);
 })
+
+//delete table element
+// $('.remove').click(function(){
+// 	var name = this.parent().siblings('.m-name').val();
+// 	alert(name);
+// })
