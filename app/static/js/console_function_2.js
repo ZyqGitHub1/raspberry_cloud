@@ -1,4 +1,5 @@
 function reflush2(result) {
+<<<<<<< HEAD
 	if (result['successful']) {	
 		var electricalList = result['data']['electricalList'];
 		electricalList.forEach(function(x) {
