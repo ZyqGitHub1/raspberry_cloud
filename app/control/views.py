@@ -1,6 +1,6 @@
 from flask import render_template,redirect,request,url_for,flash,jsonify,json,Response
 from flask.ext.login import login_user,logout_user,login_required
-from .. models import User,Electrical,Pin
+from .. models import User,Electrical,Pin, Clock
 from . import control
 from .. import db
 from camera_pi import *
@@ -118,18 +118,57 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+@control.route('/query_clock',methods=['GET', 'POST'])
+@login_required
+def query_clock():
+	clock = Clock.query.all()
+	clockList=[]
+	for tmp in clock:
+		clockList.append({'electrical_name':tmp.electrical_name,
+						'pin':tmp.pin_id, 
+						'time':tmp.clock_time,
+						'remark':tmp.remark,
+						'status':tmp.status})
+	print clockList
+	result = {
+			'successful':True,
+			'data':{
+				'clockList': clockList
+			}
+		}
+	return jsonify(result)
+
 @control.route('/timer',methods=['GET', 'POST'])
 @login_required
 def timer():
 	data = request.form
 	electrical_name = noneIfEmptyString(data.get('electrical_name'))
-	end_time = int(data.get('date')) / 1000
-	status = bool(data.get('status'))
-	start_time = int(time.time())
-	cl_time = end_time - start_time
-	print cl_time
-	timer = threading.Timer(cl_time, gpio_change, 
-							[Electrical.query.filter_by(electrical_name=electrical_name).first().pin_id,
-							status])
-	timer.start()
-	return 'hello'
+	print electrical_name
+	clock_time = int(data.get('date')) / 1000
+	status = bool(data.get('checked'))
+	remark = Electrical.query.filter_by(electrical_name=electrical_name).first().remark
+	pin_id = Electrical.query.filter_by(electrical_name=electrical_name).first().pin_id
+	clock = Clock(electrical_name=electrical_name,
+		          pin_id=pin_id,
+		          clock_time=clock_time,
+		          status=status,
+		          remark=remark)
+	db.session.add(clock)
+	result = {
+	'successful':True
+	}
+	return jsonify(result)
+
+@control.route('/delete_clock', methods=['GET', 'POST'])
+@login_required
+def delete_clock():
+	data = request.form
+	electrical_name = data.get('electrical_name')
+	clock_time = data.get('clock_time')
+	clock = Clock.query.filter_by(electrical_name=electrical_name,
+								  clock_time=clock_time).first()
+	db.session.delete(clock)
+	result = {
+	'successful':True
+	}
+	return jsonify(result)

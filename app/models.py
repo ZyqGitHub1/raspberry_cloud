@@ -112,7 +112,7 @@ class Electrical(db.Model):
     electrical_name = db.Column(db.String(64), unique=True, nullable=True)
     remark = db.Column(db.String(128), default=None)
     pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'), unique=True)
-    clocks = db.relationship('Clock', backref='electrical', lazy='dynamic')
+
     def __repr__(self):
         return '<Electrical %r>' % self.electname
 
@@ -129,9 +129,9 @@ class Clock(db.Model):
     electrical_name = db.Column(db.String(64), 
                                 db.ForeignKey('electricals.electrical_name'), nullable=True)
     pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
-    clock_time = db.Column(db.Integer, unique=True)
+    clock_time = db.Column(db.Integer)
     status = db.Column(db.Boolean, default=False)
-    remark = db.Column(db.String(128), default=None)
+    remark = db.Column(db.String(128), db.ForeignKey('electricals.remark'))
 
 
 class AnonymousUser(AnonymousUserMixin):
