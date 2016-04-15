@@ -13,6 +13,13 @@ def noneIfEmptyString(value):
 		return None
 	return value
 
+def stringToBool(value):
+	if value == u'true':
+		return True
+	if value == u'false':
+		return False
+	else:
+		return None
 
 @control.route('/switch',methods=['GET', 'POST'])
 @login_required
@@ -20,7 +27,8 @@ def switch():
 	data = request.form
 	print data
 	pin_id = noneIfEmptyString(data.get('pin_id'))
-	gpio_change(int(pin_id),request.form['turn'])
+	status = stringToBool(data.get('status'))
+	gpio_change(int(pin_id), status)
 	result = {
 		'successful':True,
 	}

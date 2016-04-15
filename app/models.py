@@ -104,14 +104,15 @@ class Pin(db.Model):
     useable = db.Column(db.Boolean, default=False)
     status = db.Column(db.Boolean, default=False)
     electricals = db.relationship('Electrical',  backref='pin', lazy='dynamic')
-
+    clocks = db.relationship('Clock', backref='pin', lazy='dynamic')
 
 class Electrical(db.Model):
     __tablename__ = 'electricals'
     id = db.Column(db.Integer, primary_key=True)
     electrical_name = db.Column(db.String(64), unique=True, nullable=True)
     remark = db.Column(db.String(128), default=None)
-    pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
+    pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'), unique=True)
+    clocks = db.relationship('Clock', backref='electrical', lazy='dynamic')
     def __repr__(self):
         return '<Electrical %r>' % self.electname
 
@@ -121,6 +122,17 @@ class Temperature(db.Model):
     time = db.Column(db.Integer, unique=True)
     temperature = db.Column(db.Float)
     humidity = db.Column(db.Float)
+
+class Clock(db.Model):
+    __tablename__ = 'clocks'
+    id = db.Column(db.Integer, primary_key=True)
+    electrical_name = db.Column(db.String(64), 
+                                db.ForeignKey('electricals.electrical_name'), nullable=True)
+    pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
+    clock_time = db.Column(db.Integer, unique=True)
+    status = db.Column(db.Boolean, default=False)
+    remark = db.Column(db.String(128), default=None)
+
 
 class AnonymousUser(AnonymousUserMixin):
     confirmed = 0
