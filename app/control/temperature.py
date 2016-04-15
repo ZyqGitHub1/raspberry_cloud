@@ -69,9 +69,10 @@ def upload_temperature():
 	tmp = humidity + humidity_point + temperature + temperature_point
 	
 	if check == tmp:
-	    print "temperature : ", temperature, ", humidity : " , humidity
-	    temp = Temperature(time = int(time.time()*1000), temperature = temperature, humidity = humidity)
+	    temp = Temperature(time = int(time.time()), 
+	    				   temperature = float(temperature), humidity = humidity)
 	    db.session.add(temp)
+	    print "temperature : ", temperature, ", humidity : " , humidity, temp
 	else:
 	    print "wrong"
 	    print "temperature : ", temperature, ", humidity : " , humidity, " check : ", check, " tmp : ", tmp

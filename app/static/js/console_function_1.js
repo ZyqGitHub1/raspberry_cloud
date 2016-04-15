@@ -138,7 +138,6 @@ function doAdd(name,interface,remark,status){
 			processAddResult(result);
 		}
 	});
-	
 }
 
 $('.add').click(function(){
@@ -149,6 +148,7 @@ $('.add').click(function(){
 	doAdd(name,interface,remark,status);
 })
 
+<<<<<<< HEAD
 //open or close the light
 $('.create-switch').click(function(){
 	var is_checked = $(this).attr('checked');
@@ -165,4 +165,4 @@ $('.create-switch').click(function(){
 			
 		}
 	});
-})
+});
