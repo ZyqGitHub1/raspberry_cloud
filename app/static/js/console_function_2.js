@@ -25,12 +25,12 @@ $('#section2-left').click(function() {
 $('.addTime').click(function(){
 	var name = $('#select-m-name').val();
 	var datetime = $('.datetime').val();
-	console.log(datetime);
+	var checked = $('.status2 > input').attr('checked');
 	var date = Date.parse(datetime);
-	console.log(date);
 	postData = {
 		'electrical_name':name,
-		'date': date
+		'date': date,
+		'checked': checked
 	}
 	$.ajax({
 		type: "POST",
