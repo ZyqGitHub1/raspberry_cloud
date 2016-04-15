@@ -23,15 +23,18 @@ $('#section2-left').click(function() {
 
 //datetimepicker
 $('.addTime').click(function(){
-	var datetime = $('.datetime').getTime();
-	var date = new Date().parse(datetime).getTime();
-	alert(datetime);
+	var name = $('#select-m-name').val();
+	var datetime = $('.datetime').val();
+	console.log(datetime);
+	var date = Date.parse(datetime);
+	console.log(date);
 	postData = {
+		'electrical_name':name,
 		'date': date
 	}
 	$.ajax({
 		type: "POST",
-		url: "====================================",
+		url: "/control/timer",
 		data: postData,
 		dataType: "JSON",
 		success: function(result){

@@ -4,7 +4,7 @@ from .. models import User,Electrical,Pin
 from . import control
 from .. import db
 from camera_pi import *
-from threading import Timer
+import threading
 import time, datetime
 from mygpio import *
 
@@ -110,16 +110,18 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-@control.route('/timer')
+@control.route('/timer',methods=['GET', 'POST'])
 @login_required
 def timer():
 	data = request.form
 	electrical_name = noneIfEmptyString(data.get('electrical_name'))
-	end_time = float(data.get('time'))
+	end_time = int(data.get('date')) / 1000
 	status = bool(data.get('status'))
-	start_time = time.mktime(datetime.datetime.now().timetuple())
-	time = end_time - start_time
-	timer = threading.Timer(time, gpio_change, 
-							id=Electrical.query.filter_by(electrical_name=electrical_name).pin_id,
-							status=status)
+	start_time = int(time.time())
+	cl_time = end_time - start_time
+	print cl_time
+	timer = threading.Timer(cl_time, gpio_change, 
+							[Electrical.query.filter_by(electrical_name=electrical_name).first().pin_id,
+							status])
 	timer.start()
+	return 'hello'
