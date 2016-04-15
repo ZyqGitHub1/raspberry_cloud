@@ -20,7 +20,7 @@ def switch():
 	data = request.form
 	print data
 	pin_id = noneIfEmptyString(data.get('pin_id'))
-	gpio_change(int(pin_id),request.form['turn'])
+	gpio_change(int(pin_id),request.form['status'])
 	result = {
 		'successful':True,
 	}
@@ -112,9 +112,6 @@ def gen(camera):
 
 # @control.route('/timer')
 # @login_required
-# def timer_switch(, status):
-
-
 # def timer():
 # 	data = request.form
 # 	electrical_name = data.noneIfEmptyString(get('electrical_name'))
