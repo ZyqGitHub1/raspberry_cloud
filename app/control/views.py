@@ -145,7 +145,7 @@ def timer():
 	electrical_name = noneIfEmptyString(data.get('electrical_name'))
 	print electrical_name
 	clock_time = int(data.get('date')) / 1000
-	status = bool(data.get('checked'))
+	status = stringToBool((data.get('checked')))
 	remark = Electrical.query.filter_by(electrical_name=electrical_name).first().remark
 	pin_id = Electrical.query.filter_by(electrical_name=electrical_name).first().pin_id
 	clock = Clock(electrical_name=electrical_name,
