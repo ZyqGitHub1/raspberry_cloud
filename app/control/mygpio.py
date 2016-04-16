@@ -10,9 +10,11 @@ def gpio_change(id,status):
 		if status == True:
 			GPIO.output(id,True)
 			Pin.query.filter_by(bcm_id=id).first().status = 1
+			print 'True'
 		if status == False:
 			GPIO.output(id,False)
 			Pin.query.filter_by(bcm_id=id).first().status = 1
+			print 'False'
 		result = {'status':True}
 	except Exception as e:
 		result = {'status':True,'error':e}

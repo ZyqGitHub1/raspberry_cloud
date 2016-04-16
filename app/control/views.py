@@ -7,103 +7,107 @@ from camera_pi import *
 import threading
 import time, datetime
 from mygpio import *
+from celery import Celery
+import os
+from t_c import *
+
 
 def noneIfEmptyString(value):
-	if value == '':
-		return None
-	return value
+    if value == '':
+        return None
+    return value
 
 def stringToBool(value):
-	if value == u'true':
-		return True
-	if value == u'false':
-		return False
-	else:
-		return None
+    if value == u'true':
+        return True
+    if value == u'false':
+        return False
+    else:
+        return None
 
 @control.route('/switch',methods=['GET', 'POST'])
 @login_required
 def switch():
-	data = request.form
-	print data
-	pin_id = noneIfEmptyString(data.get('pin_id'))
-	status = stringToBool(data.get('status'))
-	gpio_change(int(pin_id), status)
-	result = {
-		'successful':True,
-	}
-	return jsonify(result)
+    data = request.form
+    print data
+    pin_id = noneIfEmptyString(data.get('pin_id'))
+    status = stringToBool(data.get('status'))
+    gpio_change(int(pin_id), status)
+    result = {
+        'successful':True,
+    }
+    return jsonify(result)
 
 @control.route('/query_electrical',methods=['GET', 'POST'])
 @login_required
 def query_electrical():
-	electrical = Electrical.query.all()
-	electricalList=[]
-	for tmp in electrical:
-		electricalList.append({'electrical_name':tmp.electrical_name,
-							   'pin':tmp.pin_id, 
-							   'remark':tmp.remark,
-							   'status':Pin.query.filter_by(bcm_id = tmp.pin_id).first().status})
-	print electricalList
-	result = {
-			'successful':True,
-			'data':{
-				'electricalList': electricalList
-			}
-		}
-	return jsonify(result)
+    electrical = Electrical.query.all()
+    electricalList=[]
+    for tmp in electrical:
+        electricalList.append({'electrical_name':tmp.electrical_name,
+                               'pin':tmp.pin_id, 
+                               'remark':tmp.remark,
+                               'status':Pin.query.filter_by(bcm_id = tmp.pin_id).first().status})
+    print electricalList
+    result = {
+            'successful':True,
+            'data':{
+                'electricalList': electricalList
+            }
+        }
+    return jsonify(result)
 
 @control.route('/add_electrical', methods=['GET', 'POST'])
 @login_required
 def add_electricals():
-	data = request.form
-	print data
-	electrical_name = noneIfEmptyString(data.get('electrical_name'))
-	remark = noneIfEmptyString(data.get('remark'))
-	status = noneIfEmptyString(data.get('status'))
-	if(electrical_name == None):
-		result = {
-		'successful': False,
-		'error': 0
-		}
-		return jsonify(result)
-	elif(Electrical.query.filter_by(electrical_name=electrical_name).first()):
-		result = {
-		'successful': False,
-		'error': 1
-		}
-		return jsonify(result)
-	elif(Pin.query.filter_by(useable=True).first()==None):
-		result = {
-		'successful': False,
-		'error': 2
-		}
-		return jsonify(result)
-	else:
-		electrical = Electrical(electrical_name=electrical_name,
-								pin_id=Pin.query.filter_by(useable=True).first().bcm_id,
-								remark=remark)
-		db.session.add(electrical)
-		Pin.query.filter_by(useable=True).first().useable = False
-		result = {
-		'successful': True
-		}	
-		return jsonify(result)
+    data = request.form
+    print data
+    electrical_name = noneIfEmptyString(data.get('electrical_name'))
+    remark = noneIfEmptyString(data.get('remark'))
+    status = noneIfEmptyString(data.get('status'))
+    if(electrical_name == None):
+        result = {
+        'successful': False,
+        'error': 0
+        }
+        return jsonify(result)
+    elif(Electrical.query.filter_by(electrical_name=electrical_name).first()):
+        result = {
+        'successful': False,
+        'error': 1
+        }
+        return jsonify(result)
+    elif(Pin.query.filter_by(useable=True).first()==None):
+        result = {
+        'successful': False,
+        'error': 2
+        }
+        return jsonify(result)
+    else:
+        electrical = Electrical(electrical_name=electrical_name,
+                                pin_id=Pin.query.filter_by(useable=True).first().bcm_id,
+                                remark=remark)
+        db.session.add(electrical)
+        Pin.query.filter_by(useable=True).first().useable = False
+        result = {
+        'successful': True
+        }   
+        return jsonify(result)
 
 @control.route('/delete_electrical', methods=['GET', 'POST'])
 @login_required
 def delete_electrical():
-	data = request.form
-	print data
-	electrical_name = noneIfEmptyString(data.get('electrical_name'))
-	electrical = Electrical.query.filter_by(electrical_name=electrical_name).first()
-	if(electrical_name):
-		Pin.query.filter_by(bcm_id=electrical.pin_id).first().useable = 1
-		db.session.delete(electrical)
-	result = {
-	'successful': True
-	}
-	return jsonify(result)
+    data = request.form
+    print data
+    electrical_name = noneIfEmptyString(data.get('electrical_name'))
+    electrical = Electrical.query.filter_by(electrical_name=electrical_name).first()
+    if(electrical_name):
+        Pin.query.filter_by(bcm_id=electrical.pin_id).first().useable = 1
+        db.session.delete(electrical)
+    result = {
+    'successful': True
+    }
+    return jsonify(result)
 
 
 @control.route('/video_feed')
@@ -122,54 +126,60 @@ def gen(camera):
 @control.route('/query_clock',methods=['GET', 'POST'])
 @login_required
 def query_clock():
-	clock = Clock.query.all()
-	clockList=[]
-	for tmp in clock:
-		clockList.append({'electrical_name':tmp.electrical_name,
-						'pin':tmp.pin_id, 
-						'time':tmp.clock_time,
-						'remark':tmp.remark,
-						'status':tmp.status})
-	print clockList
-	result = {
-			'successful':True,
-			'data':{
-				'clockList': clockList
-			}
-		}
-	return jsonify(result)
+    clock = Clock.query.all()
+    clockList=[]
+    for tmp in clock:
+        clockList.append({'electrical_name':tmp.electrical_name,
+                        'pin':tmp.pin_id, 
+                        'time':tmp.clock_time,
+                        'remark':tmp.remark,
+                        'status':tmp.status})
+    print clockList
+    result = {
+            'successful':True,
+            'data':{
+                'clockList': clockList
+            }
+        }
+    return jsonify(result)
 
 @control.route('/timer',methods=['GET', 'POST'])
 @login_required
 def timer():
-	data = request.form
-	electrical_name = noneIfEmptyString(data.get('electrical_name'))
-	print electrical_name
-	clock_time = int(data.get('date')) / 1000
-	status = bool(data.get('checked'))
-	remark = Electrical.query.filter_by(electrical_name=electrical_name).first().remark
-	pin_id = Electrical.query.filter_by(electrical_name=electrical_name).first().pin_id
-	clock = Clock(electrical_name=electrical_name,
-		          pin_id=pin_id,
-		          clock_time=clock_time,
-		          status=status,
-		          remark=remark)
-	db.session.add(clock)
-	result = {
-	'successful':True
-	}
-	return jsonify(result)
+    data = request.form
+    electrical_name = noneIfEmptyString(data.get('electrical_name'))
+    print electrical_name
+    clock_time = int(data.get('date')) / 1000
+    status = bool(data.get('checked'))
+    remark = Electrical.query.filter_by(electrical_name=electrical_name).first().remark
+    pin_id = Electrical.query.filter_by(electrical_name=electrical_name).first().pin_id
+    clock = Clock(electrical_name=electrical_name,
+                  pin_id=pin_id,
+                  clock_time=clock_time,
+                  status=status,
+                  remark=remark)
+    db.session.add(clock)
+    task = mygpio_task.apply_async(args=[pin_id, status], countdown= int(clock_time-int(time.time())))
+    result = {
+    'successful':True
+    }
+    return jsonify(result)
 
 @control.route('/delete_clock', methods=['GET', 'POST'])
 @login_required
 def delete_clock():
-	data = request.form
-	electrical_name = data.get('electrical_name')
-	clock_time = data.get('clock_time')
-	clock = Clock.query.filter_by(electrical_name=electrical_name,
-								  clock_time=clock_time).first()
-	db.session.delete(clock)
-	result = {
-	'successful':True
-	}
-	return jsonify(result)
+    data = request.form
+    electrical_name = data.get('electrical_name')
+    clock_time = data.get('clock_time')
+    clock = Clock.query.filter_by(electrical_name=electrical_name,
+                                  clock_time=clock_time).first()
+    db.session.delete(clock)
+    result = {
+    'successful':True
+    }
+    return jsonify(result)
+
+@cel.task.task
+def mygpio_task(pin_id,status):
+    print 'hello'
+    gpio_change(int(pin_id), status)
