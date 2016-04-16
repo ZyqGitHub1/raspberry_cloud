@@ -48,8 +48,14 @@ function processReflush2Result(result){
 			}
 			var name = $("<input type='text' class='form-control' readonly='true'>");
 			var pin = $("<input type='text 'class='form-control' readonly='true'>");
-			var remark = $("<input type='text' class='form-control'>");
-			var status = $("<input class='create-switch' type='checkbox'>");
+			var remark = $("<input type='text' class='form-control' readonly='true'>");
+			var status = $("<button class='btn'></button>");
+			console.log(x['status']);
+			if (x['status']){
+				status.addClass('btn-success').html("开");
+			}else{
+				status.addClass('btn-danger').html("关");
+			}
 			var datetime = $("<input type='text 'class='form-control' readonly='true'>");
 			var remove = $("<button class='btn btn-danger remove'>删除</button>");
 			remove.on('click',function(){
@@ -77,7 +83,6 @@ function processReflush2Result(result){
 			name.val(x['electrical_name']);
 			pin.val(x['pin']);
 			remark.val(x['remark']);
-			status.attr("checked",x['status']);
 			var date = new Date();
 			date.setTime(x['time'] * 1000);
 			datetime.val(date.toLocaleString());
@@ -88,7 +93,6 @@ function processReflush2Result(result){
 			td[4].append(datetime).attr("width","33%");
 			td[5].append(remove);
 			tr.appendTo($('.table3'));
-			$('.create-switch').bootstrapSwitch();
 		});
 	}
 	else
@@ -134,7 +138,7 @@ function doAddTime(name,date,checked) {
 $('.addTime').click(function(){
 	var name = $('#select-m-name').val();
 	var datetime = $('.datetime').val();
-	var checked = $('.status2 > input').attr('checked');
+	var checked = $('.status2 input').bootstrapSwitch('state');
 	var date = Date.parse(datetime);
 	doAddTime(name,date,checked);
 })

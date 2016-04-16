@@ -69,10 +69,10 @@ function processReflushResult(result){
 					}
 				});
 			});			
+
 			name.val(x['electrical_name']);
 			pin.val(x['pin']);
 			remark.val(x['remark']);
-			status.attr("checked",x['status']);		
 			td[0].append(name);
 			td[1].append(pin);
 			td[2].append(remark);
@@ -141,10 +141,10 @@ function doAdd(name,interface,remark,status){
 }
 
 $('.add').click(function(){
-	var name = $('.m-name > input').val();
+	var name = $('.m-name input').val();
 	var interface = $('.m-interface > input').val();
-	var remark = $('.remark > input').val();
-	var status = $('.status > input').is(':checked');
+	var remark = $('.remark input').val();
+	var status = $('.status input').bootstrapSwitch('state');
 	doAdd(name,interface,remark,status);
 })
 
