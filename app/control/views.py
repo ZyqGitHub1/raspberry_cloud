@@ -1,6 +1,6 @@
 from flask import render_template,redirect,request,url_for,flash,jsonify,json,Response
 from flask.ext.login import login_user,logout_user,login_required
-from .. models import User,Electrical,Pin, Clock
+from .. models import *
 from . import control
 from .. import db
 from camera_pi import *
@@ -150,7 +150,7 @@ def timer():
     electrical_name = noneIfEmptyString(data.get('electrical_name'))
     print electrical_name
     clock_time = int(data.get('date')) / 1000
-    status = bool(data.get('checked'))
+    status = stringToBool(data.get('checked'))
     remark = Electrical.query.filter_by(electrical_name=electrical_name).first().remark
     pin_id = Electrical.query.filter_by(electrical_name=electrical_name).first().pin_id
     clock = Clock(electrical_name=electrical_name,
@@ -168,18 +168,60 @@ def timer():
 @control.route('/delete_clock', methods=['GET', 'POST'])
 @login_required
 def delete_clock():
-    data = request.form
-    electrical_name = data.get('electrical_name')
-    clock_time = data.get('clock_time')
-    clock = Clock.query.filter_by(electrical_name=electrical_name,
-                                  clock_time=clock_time).first()
-    db.session.delete(clock)
-    result = {
-    'successful':True
-    }
-    return jsonify(result)
+	data = request.form
+	electrical_name = data.get('electrical_name')
+	clock_time = data.get('clock_time')
+	clock = Clock.query.filter_by(electrical_name=electrical_name,
+								  clock_time=clock_time).first()
+	db.session.delete(clock)
+	result = {
+	'successful':True
+	}
+	return jsonify(result)
 
-@cel.task.task
-def mygpio_task(pin_id,status):
-    print 'hello'
-    gpio_change(int(pin_id), status)
+@control.route('/upload_temperature', methods=['GET', 'POST'])
+@login_required
+def upload_temperature():
+	data = request.json
+	time = int(data.get('time'))
+	temperature = float(data.get('temperature'))
+	humidity = float(data.get('humidity'))
+	tmp = Temperature(time=time,
+					  temperature=temperature,
+					  humidity=humidity)
+	db.session.add(tmp)
+	result = {
+	'successful':True
+	}
+	return jsonify(result)
+
+@control.route('/temperature_chart', methods=['GET', 'POST'])
+@login_required
+def temperature_chart():
+	data = request.form
+	starttime = noneIfEmptyString(data.get('start_time'))
+	endtime = noneIfEmptyString(data.get('end_time'))
+	if(starttime==None or endtime==None):
+		result = {
+		'successful':False,
+		'error':0
+		}
+		return jsonify(result)
+	elif starttime >= endtime:
+		result = {
+		'successful':False,
+		'error':1
+		}
+		return jsonify(result)
+	else:
+		start_time = int(starttime)
+		end_time = int(endtime)
+		temperatureList = Temperature.query.filter(and_(time>start_time, 
+						   time<end_time).order_by(time))
+		result = {
+		'successful':True,
+		'data':{
+			'temperatureList':temperatureList
+			}
+		}
+		return jsonify(result)

@@ -25,29 +25,27 @@ function processReflushResult(result){
 			for(var i = 0;i < 5;i++){
 				tr.append(td[i]);
 			}
-			var name = $("<input type='text' class='form-control'>");
+			var name = $("<input type='text' class='form-control' readonly='true'>");
 			var pin = $("<input type='text 'class='form-control' readonly='true'>");
-			var remark = $("<input type='text' class='form-control'>");
+			var remark = $("<input type='text' class='form-control' readonly='true'>");
 			var status = $("<input class='create-switch' type='checkbox'>");
 			status.on('switchChange.bootstrapSwitch', function(event, state) {
-  				console.log(state); 
   				id = x['pin'];
-  				console.log(id);
-  					postData = {
-  						'pin_id': id,
-						'status': state
+				postData = {
+					'pin_id': id,
+					'status': state
+				}
+		
+				$.ajax({
+					type: "POST",
+					url: "/control/switch",
+					data: postData,
+					dataType: "JSON",
+					success: function(result){
+						
 					}
-			
-					$.ajax({
-						type: "POST",
-						url: "/control/switch",
-						data: postData,
-						dataType: "JSON",
-						success: function(result){
-							
-						}
-					});
 				});
+			});
 			var remove = $("<button class='btn btn-danger remove'>删除</button>");
 			remove.on('click',function(){
 				var name = $(this).parent().parent().eq(0).find("input").val();
@@ -69,10 +67,10 @@ function processReflushResult(result){
 					}
 				});
 			});			
+
 			name.val(x['electrical_name']);
 			pin.val(x['pin']);
 			remark.val(x['remark']);
-			status.attr("checked",x['status']);		
 			td[0].append(name);
 			td[1].append(pin);
 			td[2].append(remark);
@@ -141,10 +139,10 @@ function doAdd(name,interface,remark,status){
 }
 
 $('.add').click(function(){
-	var name = $('.m-name > input').val();
+	var name = $('.m-name input').val();
 	var interface = $('.m-interface > input').val();
-	var remark = $('.remark > input').val();
-	var status = $('.status > input').is(':checked');
+	var remark = $('.remark input').val();
+	var status = $('.status input').bootstrapSwitch('state');
 	doAdd(name,interface,remark,status);
 })
 

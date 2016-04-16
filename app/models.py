@@ -126,6 +126,7 @@ class Temperature(db.Model):
 class Clock(db.Model):
     __tablename__ = 'clocks'
     id = db.Column(db.Integer, primary_key=True)
+    task_id = db.Column(db.String(64), unique=True, nullable=True)
     electrical_name = db.Column(db.String(64), 
                                 db.ForeignKey('electricals.electrical_name'), nullable=True)
     pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
