@@ -1,6 +1,6 @@
 from flask import render_template,redirect,request,url_for,flash,jsonify,json,Response
 from flask.ext.login import login_user,logout_user,login_required
-from .. models import User,Electrical,Pin, Clock
+from .. models import *
 from . import control
 from .. import db
 from camera_pi import *
@@ -189,7 +189,7 @@ def upload_temperature():
 	}
 	return jsonify(result)
 
-@control.route('temperature_chart', methods=['GET', 'POST'])
+@control.route('/temperature_chart', methods=['GET', 'POST'])
 @login_required
 def temperature_chart():
 	data = request.form
