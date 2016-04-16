@@ -172,3 +172,19 @@ def delete_clock():
 	'successful':True
 	}
 	return jsonify(result)
+
+@control.route('/upload_temperature', methods=['GET', 'POST'])
+@login_required
+def upload_temperature():
+	data = request.json
+	time = int(data.get('time'))
+	temperature = float(data.get('temperature'))
+	humidity = float(data.get('humidity'))
+	tmp = Temperature(time=time,
+					  temperature=temperature,
+					  humidity=humidity)
+	db.session.add(tmp)
+	result = {
+	'successful':True
+	}
+	return jsonify(result)
