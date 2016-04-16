@@ -188,3 +188,34 @@ def upload_temperature():
 	'successful':True
 	}
 	return jsonify(result)
+
+@control.route('temperature_chart', methods=['GET', 'POST'])
+@login_required
+def temperature_chart():
+	data = request.form
+	starttime = noneIfEmptyString(data.get('start_time'))
+	endtime = noneIfEmptyString(data.get('end_time'))
+	if(starttime==None or endtime==None):
+		result = {
+		'successful':False,
+		'error':0
+		}
+		return jsonify(result)
+	elif starttime >= endtime:
+		result = {
+		'successful':False,
+		'error':1
+		}
+		return jsonify(result)
+	else:
+		start_time = int(starttime)
+		end_time = int(endtime)
+		temperatureList = Temperature.query.filter(and_(time>start_time, 
+						   time<end_time).order_by(time))
+		result = {
+		'successful':True,
+		'data':{
+			'temperatureList':temperatureList
+			}
+		}
+		return jsonify(result)
