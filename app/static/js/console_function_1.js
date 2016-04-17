@@ -146,3 +146,20 @@ $('.add').click(function(){
 	doAdd(name,interface,remark,status);
 })
 
+//open or close the light
+$('.create-switch').click(function(){
+	var is_checked = $(this).attr('checked');
+	postData = {
+		'status': is_checked
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "/control/switch",
+		data: postData,
+		dataType: "JSON",
+		success: function(result){
+			
+		}
+	});
+});
