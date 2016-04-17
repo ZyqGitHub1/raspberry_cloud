@@ -11,4 +11,9 @@ def mygpio_task(pin_id,status):
 
 @app.task
 def get_temp():
+    gpio_change(int(pin_id), status)
+
+
+@app.task
+def get_temp():
 	upload_temperature()

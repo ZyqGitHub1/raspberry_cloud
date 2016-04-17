@@ -231,5 +231,8 @@ def temperature_chart():
 			}
 		}
 		return jsonify(result)
+<<<<<<< HEAD
 
 # @control.route('/')
+=======
+>>>>>>> d89873d859afbf32f31ce9fa71cc07886d9ee551
