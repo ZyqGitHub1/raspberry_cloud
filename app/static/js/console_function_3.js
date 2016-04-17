@@ -27,10 +27,7 @@ function processSearchResult(result) {
 			alert("查询时间不能为空");
 			break;
 		case 1:
-			alert("查询时间不能相等");
-			break;
-		case 2:
-			alert("开始时间在结束时间之后");
+			alert("查询时间错误");
 			break;
 		default:
 			break;
@@ -42,10 +39,10 @@ function doSearch(start_time,end_time) {
 		'start_time': start_time,
 		'end_time': end_time
 	}
-
+	console.log('hhhhhh')
 	$.ajax({
 		type: "POST",
-		url: "===========================================",
+		url: "/control/temperature_chart",
 		data: postData,
 		dataType: "JSON",
 		success: function(result){
@@ -54,7 +51,7 @@ function doSearch(start_time,end_time) {
 	});
 }
 
-$('.search').click(function() {
+$('.tp_search').click(function() {
 	var startTime = $('.start_date_time').val();
 	var endTime = $('.end_date_time').val();
 	var start_time = Date.parse(startTime);

@@ -14,6 +14,8 @@ class Config:
     RPICLOUD_MAIL_SENDER = 'RPIcloud Admin <940068139@qq.com>'
     RPICLOUD_ADMIN = 'admin'
     SQLALCHEMY_TRACK_MODIFICATIONS = True 
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
     @staticmethod
     def init_app(app):
         pass
