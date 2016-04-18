@@ -60,7 +60,7 @@ function processReflush2Result(result){
 			var remove = $("<button class='btn btn-danger remove'>删除</button>");
 			remove.on('click',function(){
 				var name = $(this).parent().parent().eq(0).find("input").val();
-				var time = x['time']
+				var time = x['time'];
 				postData = {
 					'electrical_name': name,
 					'clock_time': time

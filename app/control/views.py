@@ -10,6 +10,7 @@ from mygpio import *
 from celery import Celery
 import os
 from t_c import *
+import random
 
 
 def noneIfEmptyString(value):
@@ -215,15 +216,20 @@ def temperature_chart():
 		return jsonify(result)
 	else:
 		start_time = int(starttime)
-		end_time = int(endtime)
-		temperatures = Temperature.query.filter(and_(time>start_time, 
-						   time<end_time).order_by(time))
-		tmpList = []
-		for tmp in temperatures:
-			tmpList.append({'time':tmp.time, 'temperature':tmp.temperature})
+		end_time = start_time + 3600
 		temperatureList = []
-		for x in tmpList[::720]:
-			temperatureList.append(x)
+		for time in range(24):
+			temperatures = Temperature.query.filter(and_(time>start_time, 
+						   time<end_time).all())
+			count = 0
+			sum = 0
+			for tmp in temperatures:
+				sum += tmp.temperature
+				count += 1
+			average_temperature = sum / count
+			start_time = end_time
+			end_time = start_time + 3600
+			temperatureList.append({'time':time, 'temperature':average_temperature})
 		result = {
 		'successful':True,
 		'data':{
@@ -231,8 +237,5 @@ def temperature_chart():
 			}
 		}
 		return jsonify(result)
-<<<<<<< HEAD
 
 # @control.route('/')
-=======
->>>>>>> d89873d859afbf32f31ce9fa71cc07886d9ee551

@@ -1,7 +1,17 @@
 function processSearchResult(result) {
 	if (result['successful']) {
+		var temperatureList = result['data']['temperatureList'];
+		console.log(temperatureList[23]['time']);
+		var t_labels = new Array(24);
+		var t_data = new Array(24);
+		for (var i = 0; i < 24; i++) {
+			t_labels[i] = temperatureList[i]['time'];
+			t_data[i] = temperatureList[i]['temperature'];
+		}
+		console.log(t_labels[1]);
+		console.log(t_data[1]);
 		var lineChartData = {
-			labels : ["January","February","March","April","May","June","July"],
+			labels : t_labels,
 			datasets : [
 				{
 					label: "temperature dataset",
@@ -11,7 +21,7 @@ function processSearchResult(result) {
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : [25,48,36,57,2,89,62,33]
+					data : t_data
 				}
 			]
 		}
