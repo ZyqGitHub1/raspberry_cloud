@@ -1,0 +1,29 @@
+.side{
+	padding-bottom: 40%;
+	background-color: #f5f5f5;
+	border-right: 1px solid #eee;
+}
+
+#section2-right,#section3-right,#section4-right,#section5-right{
+	display: none;
+}
+
+.dropdown{
+	padding-top: 5%;
+}
+
+/*modal*/
+.modal-dialog{
+	padding-top: 10%;
+}
+
+.modal-content{
+	text-align: center;
+	width: 60%;
+	margin: 0 auto;
+}
+
+.modal-body{
+	width: 80%;
+	margin: 0 auto;
+}

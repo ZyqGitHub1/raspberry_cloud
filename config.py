@@ -5,10 +5,17 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    MAIL_SERVER = 'smtp.qq.com'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = '940068139@qq.com'
+    MAIL_PASSWORD = 'qmbpghkqtcqcbfbh'
     RPICLOUD_MAIL_SUBJECT_PREFIX = '[RASPcloud]'
-    RPICLOUD_MAIL_SENDER = 'RPIcloud Admin <RPIcloud@example.com>'
+    RPICLOUD_MAIL_SENDER = 'RPIcloud Admin <940068139@qq.com>'
     RPICLOUD_ADMIN = 'admin'
     SQLALCHEMY_TRACK_MODIFICATIONS = True 
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
     @staticmethod
     def init_app(app):
         pass
@@ -17,7 +24,7 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     # MAIL_SERVER = 'localhost'
-    MAIL_PORT = '587'
+    #MAIL_PORT = '587'
     # MAIL_USE_TLS = 	True
     # MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     # MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')

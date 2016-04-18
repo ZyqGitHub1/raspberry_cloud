@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    	<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<meta name="description" content="">
+    	<meta name="author" content="">
+		<title>RpiCloud</title>
+		<!-- css -->
+		<link rel="stylesheet" href="static/css/bootstrap.css">
+		<link rel="stylesheet" href="static/css/bootstrap-switch.css">
+		<link rel="stylesheet" href="static/css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="static/css/console.css">
+		<link rel="stylesheet" href="static/css/offcanvas.css">
+	</head>
+	<body>
+		<!--nav begin-->
+		<nav class="navbar navbar-fixed-top navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<span class="sr-only">Toggle navigation</span>
+					<p class="pull-left visible-xs">
+            			<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          			</p>
+					<a href="#" class="navbar-brand">RpiCloud</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse navbar-right">
+            		<div class="dropdown">
+					  	<a href="" id="dropdownMenu1" class="btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{current_user.username}}({{ current_user.email }})
+					  		<span class="caret"></span>
+					  	</a>
+					  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					    	<li><a href="#" data-toggle="modal" data-target="#changeUsername">更改用户名</a></li>
+					    	<li><a href="#" data-toggle="modal" data-target="#changePassword">更改密码</a></li>
+					    	<li><a href="#" data-toggle="modal" data-target="#changeEmail">更改邮箱</a></li>
+					    	<li role="separator" class="divider"></li>
+					    	<li><a href="#" data-toggle="modal" data-target="#logout">退出登录</a></li>
+					  	</ul>
+					</div>
+		        </div>
+			</div>
+		</nav><!-- nav end -->
+	   	<div class="container">
+	      	<div class="row row-offcanvas row-offcanvas-left">
+	      	  	<div class="col-xs-2 col-sm-2 sidebar-offcanvas side" id="sidebar">
+	          		<div>
+	            		<ul class="nav nav-stacked">
+				            <li><button type="button" class="btn btn-primary btn-block" id="section1-left">功能1</button></li>
+				            <li><button type="button" class="btn btn-primary btn-block" id="section2-left">功能2</button></li>
+				            <li><button type="button" class="btn btn-primary btn-block" id="section3-left">功能3</button></li>
+				            <li><button type="button" class="btn btn-primary btn-block" id="section4-left">功能4</button></li>
+				            <li><button type="button" class="btn btn-primary btn-block" id="section5-left">功能5</button></li>
+				        </ul>
+	          		</div>
+	        	</div><!--/.sidebar-offcanvas-->
+
+		        <div class="col-xs-12 col-sm-9">
+		        	<div id="section1-right">
+		        		<table class="table table-hover table-striped table-responsive table-bordered table1">
+		        			<tr>
+		        				<th>电器名称</th>
+		        				<th>电器接口</th>
+		        				<th>备注</th>
+		        				<th>状态</th>
+		        				<th>添加/删除</th>
+		        			</tr>
+		        			<tr class="header">
+		        				<td class="m-name">
+		        					<input type="text" class="form-control">
+		        				</td>
+		        				<td class="m-interface">
+			        				<input type="text" class="form-control" value="自动获取" readonly="true">
+							    </td>
+		        				<td class="remark">
+		        					<input type="text" class="form-control">
+		        				</td>
+		        				<td class="status">
+		        					<input type="checkbox" checked/>
+		        				</td>
+		        				<td class="add-or-remove">
+		        					<button class="btn btn-success add">添加</button>
+		        				</td>
+		        			</tr>
+		        		</table>
+		        		<table class="table table-hover table-striped table-responsive table-bordered table2">
+
+		        		</table>
+			        </div>
+			        <div id="section2-right">
+			        	<table class="table table-hover table-striped table-responsive table-bordered">
+		        			<tr>
+		        				<th>电器名称</th>
+		        				<th>电器接口</th>
+		        				<th>备注</th>
+		        				<th>状态</th>
+		        				<th>时间</th>
+		        				<th>添加/删除</th>
+		        			</tr>
+		        			<tr>
+		        				<td width="15%">
+		        					<select id="select-m-name" class="form-control"></select>
+		        				</td>
+		        				<td width="12%">
+			        				<input type="text" class="form-control" value="自动获取" readonly="true">
+							    </td>
+		        				<td>
+		        					<input type="text" class="form-control">
+		        				</td>
+		        				<td class="status2">
+		        					<input type="checkbox"/>
+		        				</td>
+		        				<td width="33%">
+	        					    <div class="input-group date form_datetime" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd - HH:ii p" data-link-field="dtp_input1">
+					                    <input class="form-control datetime" size="16" type="text" value="" readonly>
+					                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+					                </div>    
+		        				</td>
+		        				<td>
+		        					<button class="btn btn-success addTime">添加</button>
+		        				</td>
+		        			</tr>
+		        		</table>
+		        		<table class="table table-hover table-striped table-responsive table-bordered table3"></table>
+			        </div>
+			        <div id="section3-right">
+						<form class="form-inline">
+						    <div class="form-group">
+							    <label for="startTimeLabel">start time:</label>
+							    <div class="input-group date form_datetime_1" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd" data-link-field="dtp_input1">
+				                    <input class="form-control start_date_time" size="16" type="text" value="" readonly>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+									<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				                </div>
+						    </div>
+						  	<div class="form-group">
+						    	<label for="endTimeLabel">end time:</label>
+							    <div class="input-group date form_datetime_1" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd" data-link-field="dtp_input1">
+				                    <input class="form-control end_date_time" size="16" type="text" value="" readonly>
+				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+									<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				                </div>
+						  	</div>
+						</form>	
+						<button class="btn btn-primary tp_search">查看</button>	
+						<div>
+							<div>
+								<canvas id="canvas"></canvas>
+							</div>
+						</div>
+			        </div>
+			        <div id="section4-right">
+			        	<!-- <img src="{{ url_for('control.video_feed') }}"> -->
+			        </div>
+			        <div id="section5-right">
+			        	<p>5555555555555555</p>
+			        </div>
+		        </div><!--/.col-xs-12.col-sm-9-->
+	      	</div><!--/row-->
+		</div>
+		<!-- change username Modal -->
+		<div class="modal fade" id="changeUsername" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Change Your Username</h4>
+				    </div>
+			      	<div class="modal-body change-username-body">
+			      		<div class="alert alert-danger hide" id="change-username-alert" role="alert"></div>
+			        	<input type="text" class="form-control" id="change-username" placeholder="Your new name">
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
+				        <button type="button" class="btn btn-success" id="username-save">Save</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		<!-- change password Modal -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Change Your Password</h4>
+				    </div>
+			      	<div class="modal-body change-password-body">
+			      		<div class="alert alert-danger hide" id="change-password-alert" role="alert"></div>
+			      		<input type="password" class="form-control" id="change-oldpassword" placeholder="Your old password">
+			        	<input type="password" class="form-control" id="change-password" placeholder="Your new password">
+			        	<input type="password" class="form-control" id="change-repassword" placeholder="Comfirm your new password">
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
+				        <button type="button" class="btn btn-success" id="password-save">Save</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		<!-- change email Modal -->
+		<div class="modal fade" id="changeEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Change Your Email</h4>
+				    </div>
+			      	<div class="modal-body change-email-body">
+			      		<div class="alert alert-danger hide" id="change-email-alert1" role="alert"></div>
+			      		<div class="alert alert-success hide" id="change-email-alert2" role="alert"></div>
+			      		<input type="password" class="form-control" id="change-email-oldpassword" placeholder="Your old password">
+			        	<input type="text" class="form-control" id="change-email" placeholder="Your new email">
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Canel</button>
+				        <button type="button" class="btn btn-success" id="email-save">Save</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		<!-- log out Modal -->
+		<div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+				    <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Log Out</h4>
+				    </div>
+			      	<div class="modal-body">
+			        	<h5>Are you sure to leave?</h5>
+			      	</div>
+			      	<div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				        <button type="button" class="btn btn-success" id="logoutyes">Yes</button>
+			      	</div>
+		    	</div>
+		  	</div>
+		</div>
+		</div>
+
+		<!-- js -->
+		<script src ='static/js/jquery-1.12.2.min.js'></script>
+		<script src ='static/js/bootstrap.min.js'></script>
+		<script src ='static/js/bootstrap-switch.js'></script>
+		<script src ='static/js/bootstrap-datetimepicker.js'></script>
+		<script src ='static/js/bootstrap-datetimepicker.fr.js'></script>
+		<script src ='static/js/Chart.js'></script>
+		<script src ='static/js/console.js'></script>
+		<script src ='static/js/console_function_1.js'></script>
+		<script src ='static/js/console_function_2.js'></script>
+		<script src ='static/js/console_function_3.js'></script>
+		<script src ='static/js/shake.js'></script>
+		<script src ='static/js/offcanvas.js'></script>
+	</body>
+</html>

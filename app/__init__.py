@@ -1,6 +1,6 @@
 from flask import Flask,render_template
 from flask.ext.bootstrap import Bootstrap
-from flask.ext.mail import Mail;
+from flask.ext.mail import Mail
 from flask.ext.moment import Moment
 from flask.ext.sqlalchemy import SQLAlchemy
 from config import config
@@ -29,6 +29,9 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint,url_prefix='/auth')
+    from .control import control as control_blueprint
+    app.register_blueprint(control_blueprint,url_prefix='/control')
+
 
 
     return app
