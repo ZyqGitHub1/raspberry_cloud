@@ -126,14 +126,18 @@ class Temperature(db.Model):
 class Clock(db.Model):
     __tablename__ = 'clocks'
     id = db.Column(db.Integer, primary_key=True)
-    task_id = db.Column(db.String(64), unique=True, nullable=True)
+    task_id = db.Column(db.String(128), unique=True, nullable=True)
     electrical_name = db.Column(db.String(64), 
                                 db.ForeignKey('electricals.electrical_name'), nullable=True)
     pin_id = db.Column(db.Integer, db.ForeignKey('pin.id'))
     clock_time = db.Column(db.Integer)
     status = db.Column(db.Boolean, default=False)
-    remark = db.Column(db.String(128), db.ForeignKey('electricals.remark'))
+    remark = db.Column(db.String(128), default=None)
 
+class Task(db.Model):
+    __tablename__ = 'task'
+    task_id = db.Column(db.String(128), primary_key=True, unique=True, nullable=True)
+    sensor_name = db.Column(db.String(64), nullable=True)
 
 class AnonymousUser(AnonymousUserMixin):
     confirmed = 0

@@ -71,7 +71,7 @@ def upload_temperature():
 		tmp = humidity + humidity_point + temperature + temperature_point
 		
 		if check == tmp:
-		    print "temperature : ", temperature, ", humidity : " , humidity, temp
+		    print "temperature : ", temperature, ", humidity : " , humidity, tmp
 	
 		else:
 		    print "wrong"

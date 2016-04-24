@@ -7,7 +7,7 @@ from camera_pi import *
 import threading
 import time, datetime
 from mygpio import *
-from celery import Celery
+from celery.task.control import revoke
 import os
 from t_c import *
 
@@ -160,6 +160,7 @@ def timer():
                   remark=remark)
     db.session.add(clock)
     task = mygpio_task.apply_async(args=[pin_id, status], countdown= int(clock_time-int(time.time())))
+    print task.id
     result = {
     'successful':True
     }
@@ -168,32 +169,80 @@ def timer():
 @control.route('/delete_clock', methods=['GET', 'POST'])
 @login_required
 def delete_clock():
-	data = request.form
-	electrical_name = data.get('electrical_name')
-	clock_time = data.get('clock_time')
-	clock = Clock.query.filter_by(electrical_name=electrical_name,
-								  clock_time=clock_time).first()
-	db.session.delete(clock)
-	result = {
-	'successful':True
-	}
-	return jsonify(result)
+    data = request.form
+    electrical_name = data.get('electrical_name')
+    clock_time = data.get('clock_time')
+    clock = Clock.query.filter_by(electrical_name=electrical_name,
+                                  clock_time=clock_time).first()
+    db.session.delete(clock)
+    result = {
+    'successful':True
+    }
+    return jsonify(result)
 
 @control.route('/upload_temperature', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def upload_temperature():
-	data = request.json
-	time = int(data.get('time'))
-	temperature = float(data.get('temperature'))
-	humidity = float(data.get('humidity'))
-	tmp = Temperature(time=time,
-					  temperature=temperature,
-					  humidity=humidity)
-	db.session.add(tmp)
-	result = {
-	'successful':True
-	}
-	return jsonify(result)
+    data = request.json
+    time = int(data.get('time'))
+    temperature = float(data.get('temperature'))
+    humidity = float(data.get('humidity'))
+    tmp = Temperature(time=time,
+                      temperature=temperature,
+                      humidity=humidity)
+    db.session.add(tmp)
+    result = {
+    'successful':True
+    }
+    return jsonify(result)
+
+@control.route('/temperature/switch/',methods=['GET', 'POST'])
+def temperature_switch(status):
+    data = request.form
+    temperature_status = stringToBool(data.get('status'))
+    if temperature_status:
+        temp_task = get_temp.apply_async(args=[5], countdown= 0)
+        task_updata = Task(task_id = temp_task.id,sensor_name = 'dht11')
+        result = {
+        'successful':True,
+        'data':{
+            'status':True
+            }
+        }
+    else:
+        delete_task_id = Task.query.filter_by(sensor_name='dht11').first().task_id
+        revoke(delete_task_id, terminate=True)
+        result = {
+        'successful':True,
+        'data':{
+            'status':False
+            }
+        }
+    return jsonify(result)
+
+@control.route('/mail/switch/',methods = ['GET', 'POST'])
+def mail_switch(status):
+    data = request.form
+    tmail_status = stringToBool(data.get('status'))
+    if mail_status:
+        mail_task = celery_email.apply_async(args=[20], countdown= 0)
+        task_updata = Task(task_id = mail_task.id,sensor_name = 'red')
+        result = {
+        'successful':True,
+        'data':{
+            'status':True
+            }
+        }
+    else:
+        delete_task_id = Task.query.filter_by(sensor_name='red').first().task_id
+        revoke(delete_task_id, terminate=True)
+        result = {
+        'successful':True,
+        'data':{
+            'status':False
+            }
+        }
+    return jsonify(result)
 
 @control.route('/temperature_chart', methods=['GET', 'POST'])
 @login_required
@@ -215,9 +264,20 @@ def temperature_chart():
 		return jsonify(result)
 	else:
 		start_time = int(starttime)
-		end_time = int(endtime)
-		temperatureList = Temperature.query.filter(and_(time>start_time, 
-						   time<end_time).order_by(time))
+		end_time = start_time + 3600
+		temperatureList = []
+		for time in range(24):
+			temperatures = Temperature.query.filter(and_(time>start_time, 
+						   time<end_time).all())
+			count = 0
+			sum = 0
+			for tmp in temperatures:
+				sum += tmp.temperature
+				count += 1
+			average_temperature = sum / count
+			start_time = end_time
+			end_time = start_time + 3600
+			temperatureList.append({'time':time, 'temperature':average_temperature})
 		result = {
 		'successful':True,
 		'data':{
@@ -225,3 +285,16 @@ def temperature_chart():
 			}
 		}
 		return jsonify(result)
+
+@control.route('/celery_email', methods=['GET', 'POST'])
+def celery_email():
+	data = request.form
+	print data.get('status')
+	status = stringToBool(data.get('status'))
+	print status
+	if status:
+		send_email('940068139@qq.com', 'Dangerous',
+				   'control/dangerous', user=ch)
+	else:
+		flash('hahaha')
+	return render_template('auth/trans.html')
