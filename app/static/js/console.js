@@ -27,9 +27,6 @@ $('#section4-left').click(function() {
 	$('#section2-right').hide();
 	$('#section3-right').hide();
 	$('#section4-right').show();
-    var pic = $('<img src="control/video_feed">');
-    $('#section4-right').appendTo(pic);
-    $('#section4-right')
 	$('#section5-right').hide();
 })
 
