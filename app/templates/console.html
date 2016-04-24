@@ -129,7 +129,7 @@
 						<form class="form-inline">
 						    <div class="form-group">
 							    <label for="startTimeLabel">start time:</label>
-							    <div class="input-group date form_datetime" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd - HH:ii p" data-link-field="dtp_input1">
+							    <div class="input-group date form_datetime_1" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd" data-link-field="dtp_input1">
 				                    <input class="form-control start_date_time" size="16" type="text" value="" readonly>
 				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 									<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -137,7 +137,7 @@
 						    </div>
 						  	<div class="form-group">
 						    	<label for="endTimeLabel">end time:</label>
-							    <div class="input-group date form_datetime" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd - HH:ii p" data-link-field="dtp_input1">
+							    <div class="input-group date form_datetime_1" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy/mm/dd" data-link-field="dtp_input1">
 				                    <input class="form-control end_date_time" size="16" type="text" value="" readonly>
 				                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 									<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -155,7 +155,26 @@
 			        	<!-- <img src="{{ url_for('control.video_feed') }}"> -->
 			        </div>
 			        <div id="section5-right">
-			        	<p>5555555555555555</p>
+			        	<table class="table table-hover table-striped table-responsive table-bordered">
+			        		<tr>
+			        			<td>发信</td>
+								<td>
+									<button class="btn btn-success btn-block" id="m_switch_open">开</button>
+								</td>
+								<td>
+									<button class="btn btn-danger btn-block" id="m_switch_close">关</button>
+								</td>
+			        		</tr>
+			        		<tr>
+			        			<td>测温</td>
+								<td>
+									<button class="btn btn-success btn-block" id="t_switch_open">开</button>
+								</td>
+								<td>
+									<button class="btn btn-danger btn-block" id="t_switch_close">关</button>
+								</td>
+			        		</tr>
+			        	</table>
 			        </div>
 		        </div><!--/.col-xs-12.col-sm-9-->
 	      	</div><!--/row-->
@@ -255,6 +274,7 @@
 		<script src ='static/js/console_function_1.js'></script>
 		<script src ='static/js/console_function_2.js'></script>
 		<script src ='static/js/console_function_3.js'></script>
+		<script src ='static/js/console_function_5.js'></script>
 		<script src ='static/js/shake.js'></script>
 		<script src ='static/js/offcanvas.js'></script>
 	</body>

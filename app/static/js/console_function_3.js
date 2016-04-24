@@ -1,18 +1,17 @@
 function processSearchResult(result) {
 	if (result['successful']) {
-		// var temperatureList = result['data']['temperatureList'];
-		// console.log(temperatureList[23]['time']);
-		// var t_labels = new Array(24);
-		// var t_data = new Array(24);
-		// for (var i = 0; i < 24; i++) {
-		// 	t_labels[i] = temperatureList[i]['time'];
-		// 	t_data[i] = temperatureList[i]['temperature'];
-		// }
-		// console.log(t_labels[1]);
-		// console.log(t_data[1]);
-
+		var temperatureList = result['data']['temperatureList'];
+		console.log(temperatureList[23]['time']);
+		var t_labels = new Array(24);
+		var t_data = new Array(24);
+		for (var i = 0; i < 24; i++) {
+			t_labels[i] = temperatureList[i]['time'];
+			t_data[i] = temperatureList[i]['temperature'];
+		}
+		console.log(t_labels[1]);
+		console.log(t_data[1]);
 		var lineChartData = {
-			labels : ['100','100','100','100','100','100','100','100','100','100','100','100','100'],
+			labels : t_labels,
 			datasets : [
 				{
 					label: "temperature dataset",
@@ -22,7 +21,7 @@ function processSearchResult(result) {
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : ['100','456','100','70','100','123','100','56','100','798','100','23','100']
+					data : t_data
 				}
 			]
 		}

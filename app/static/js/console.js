@@ -54,7 +54,18 @@ $('.form_datetime').datetimepicker({
     todayHighlight: 1,
     startView: 2,
     forceParse: 0,
-    showMeridian: 1
+    showMeridian: 1,
+});
+
+$('.form_datetime_1').datetimepicker({
+    weekStart: 1,
+    todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    forceParse: 0,
+    showMeridian: 1,
+    minView: 'month'
 });
 
 // change username modal

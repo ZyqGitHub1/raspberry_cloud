@@ -10,6 +10,7 @@ from mygpio import *
 from celery.task.control import revoke
 import os
 from t_c import *
+import random
 
 
 def noneIfEmptyString(value):
@@ -285,7 +286,7 @@ def temperature_chart():
 			}
 		}
 		return jsonify(result)
-
+        
 @control.route('/celery_email', methods=['GET', 'POST'])
 def celery_email():
 	data = request.form
