@@ -13,7 +13,7 @@ Mako==1.0.4
 MarkupSafe==0.23
 SQLAlchemy==1.0.12
 WTForms==2.1
-Werkzeug==0.11.5
+Werkzeug==0.15.3
 alembic==0.8.5
 amqp==1.4.9
 anyjson==0.3.3
